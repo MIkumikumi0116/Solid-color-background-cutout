@@ -1,7 +1,7 @@
 from os import walk
 from PIL import Image
 
-#根据容差判断这个像素是不是要抠掉，要被抠掉就返回ture
+#判断这个像素是不是要抠掉，要被抠掉就返回ture
 def cuttedOrNot(pixdate,color):
     if abs(pixdate[0]-color[0]) <= tolerance and abs(pixdate[1]-color[1]) <= tolerance and abs(pixdate[2]-color[2]) <= tolerance:
         return True
@@ -80,8 +80,9 @@ def cut(root,filename):
     #白色色块的内部因为边界的像素都不会被抠掉，而扫描像素又是一圈一圈向内扫描，所以也不会被扣掉
     #但是一圈一圈地扫描像素代码写起来很麻烦，就改成从左到右，同时从上到下扫描一遍，再从上到下，从左到右扫描一遍，再从右到左、从上到下一遍，从下到上、从左到右一遍
     #上面那样再扫描一遍，和从外圈到内圈效果一样
+    #然后为了适应边缘检测抠图后抠不干净的问题（见最下面的注释），指定如果手动抠掉白色色块里的几个像素,那它们周围的像素也得抠，这样子就得再扫描一遍每个像素
 
-    for i in range(2):
+    for i in range(3):
         for x in range(img.size[0]):
             for y in range(img.size[1]):
                 #由于列表越界的问题，边上一圈像素和中间的像素分开处理
@@ -89,6 +90,8 @@ def cut(root,filename):
                     route[x][y] = 1
                 elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
+                elif pixdata[x,y] == (0,0,0,0):
+                     route[x][y] = 1
 
         for y in range(img.size[1]):
             for x in range(img.size[0]):
@@ -96,6 +99,8 @@ def cut(root,filename):
                     route[x][y] = 1
                 elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
+                elif pixdata[x,y] == (0,0,0,0):
+                     route[x][y] = 1
 
         for x in range(img.size[0]-1,-1,-1):
             for y in range(img.size[1]):
@@ -103,6 +108,8 @@ def cut(root,filename):
                     route[x][y] = 1
                 elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
+                elif pixdata[x,y] == (0,0,0,0):
+                     route[x][y] = 1
 
         for y in range(img.size[1]-1,-1,-1):
             for x in range(img.size[0]):
@@ -110,6 +117,8 @@ def cut(root,filename):
                     route[x][y] = 1
                 elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
+                elif pixdata[x,y] == (0,0,0,0):
+                     route[x][y] = 1
 
     #哪些像素要抠确定好了，抠
     for x in range(img.size[0]):
@@ -124,7 +133,7 @@ def cut(root,filename):
 
 
 #抠图容差，有些图背景可能是254，253之类的，当某个像素三个通道颜色都和背景之差都小于容差时会被抠掉
-tolerance = 0
+tolerance = 5
 
 for root,dir,file in walk("source"):
     for filename in file:

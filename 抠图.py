@@ -1,18 +1,29 @@
 from os import walk
 from PIL import Image
- 
+
+#判断这个像素是不是要抠掉，要被抠掉就返回ture
+def cuttedOrNot(pixdate,color):
+    if abs(pixdate[0]-color[0]) <= tolerance and abs(pixdate[1]-color[1]) <= tolerance and abs(pixdate[2]-color[2]) <= tolerance:
+        return True
+    else:
+        return False
+
+#抠图
 def cut(root,filename):
     img = Image.open(root+'\\'+filename)
     img = img.convert("RGBA")
  
     pixdata = img.load()
+    #指定要抠掉的颜色为左上角第一个像素颜色
+    color = pixdata [0,0]
+
     #先把外面一圈的白色像素扣掉，上下左右指要留下区域的上下左右边界
     left,upper,right,lower = 0,0,0,0
     #四次遍历图片，确定上下左右边界
     flag = 0
     for x in range(img.size[0]):
         for y in range(img.size[1]):
-            if not pixdata[x,y] == (255,255,255,255):
+            if not cuttedOrNot(pixdata[x,y],color):
                 left = x
                 flag = 1
                 break
@@ -22,7 +33,7 @@ def cut(root,filename):
     flag = 0
     for y in range(img.size[1]):
         for x in range(img.size[0]):
-            if not pixdata[x,y] == (255,255,255,255):
+            if not cuttedOrNot(pixdata[x,y],color):
                 upper = y
                 flag = 1
                 break
@@ -32,7 +43,7 @@ def cut(root,filename):
     flag = 0
     for x in range(img.size[0]-1,-1,-1):
         for y in range(img.size[1]):
-            if not pixdata[x,y] == (255,255,255,255):
+            if not cuttedOrNot(pixdata[x,y],color):
                 right = x
                 flag = 1
                 break
@@ -42,7 +53,7 @@ def cut(root,filename):
     flag = 0
     for y in range(img.size[1]-1,-1,-1):
         for x in range(img.size[0]):
-            if not pixdata[x,y] == (255,255,255,255):
+            if not cuttedOrNot(pixdata[x,y],color):
                 lower = y
                 flag = 1
                 break
@@ -73,30 +84,31 @@ def cut(root,filename):
     for i in range(2):
         for x in range(img.size[0]):
             for y in range(img.size[1]):
-                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and pixdata[x, y] == (255, 255, 255, 255):
+                #由于列表越界的问题，边上一圈像素和中间的像素分开处理
+                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and cuttedOrNot(pixdata[x,y],color):
                     route[x][y] = 1
-                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and pixdata[x, y] == (255, 255, 255, 255) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
+                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
 
         for y in range(img.size[1]):
             for x in range(img.size[0]):
-                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and pixdata[x, y] == (255, 255, 255, 255):
+                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and cuttedOrNot(pixdata[x,y],color):
                     route[x][y] = 1
-                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and pixdata[x, y] == (255, 255, 255, 255) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
+                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
 
         for x in range(img.size[0]-1,-1,-1):
             for y in range(img.size[1]):
-                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and pixdata[x, y] == (255, 255, 255, 255):
+                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and cuttedOrNot(pixdata[x,y],color):
                     route[x][y] = 1
-                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and pixdata[x, y] == (255, 255, 255, 255) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
+                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
 
         for y in range(img.size[1]-1,-1,-1):
             for x in range(img.size[0]):
-                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and pixdata[x, y] == (255, 255, 255, 255):
+                if (x==0 or y==0 or x==img.size[0]-1 or y==img.size[1]-1) and cuttedOrNot(pixdata[x,y],color):
                     route[x][y] = 1
-                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and pixdata[x, y] == (255, 255, 255, 255) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
+                elif ((not x==0) and (not y==0) and (not x==img.size[0]-1) and (not y==img.size[1]-1)) and cuttedOrNot(pixdata[x,y],color) and (route[x-1][y] == 1 or route[x][y-1] == 1 or route[x+1][y] == 1 or route[x][y+1] == 1):
                     route[x][y] = 1
 
     #哪些像素要抠确定好了，抠
@@ -105,14 +117,22 @@ def cut(root,filename):
           if route[x][y] == 1:
                 pixdata[x, y] = (0, 0, 0, 0)
 
-    #最后就是这个算法只是实现边缘检测，但只能检测到算法认为的边缘，比如一条丝带围了一圈，在人看来中间一圈白的是要抠掉的，但是算法认不出来
-    #这种可以手动用PS什么的点一个透明像素在里面，再跑一遍算法
-    #还有一种情况就是比如一张纸，边缘是黑的，中间是白的，但是这张纸超出了图片的边界，在人看来是不应该抠掉的，但是算法就会把纸中间的白色像素抠掉
-    #这种因为抠掉的都是255白，可以用PS手动填充一下，不怎么麻烦
-    #这两种边界检测的算法我是想不出来了，目测要用机器学习弄，菜鸡表示......
     img.save( 'done\\' + filename)
- 
+    
+
+
+
+
+#抠图容差，有些图背景可能是254，253之类的，当某个像素三个通道颜色都和背景之差都小于容差时会被抠掉
+tolerance = 0
+
 for root,dir,file in walk("source"):
     for filename in file:
-        #抠source文件夹里的所有图片，口完了放在done文件夹里
+        #抠source文件夹里的所有图片，抠完了放在done文件夹里
         cut(root,filename)
+
+#最后就是这个算法实现了边缘检测，但只能检测到算法认为的边缘，比如一条丝带围了一圈，在人看来中间一圈白的是要抠掉的，但是算法认不出来
+#这种可以手动用PS什么的点一个透明像素在里面，再跑一遍算法
+#还有一种情况就是比如一张纸，边缘是黑的，中间是白的，这张纸超出了图片的边界，在人看来是不应该抠掉的，但是算法就会把纸中间的白色像素抠掉
+#这种因为抠掉的都是纯色，可以用PS手动填充一下，不怎么麻烦
+#这两种边界检测的算法是想不出来了，目测要用机器学习弄，菜鸡表示......

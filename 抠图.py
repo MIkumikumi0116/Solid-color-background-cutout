@@ -1,7 +1,7 @@
 from os import walk
 from PIL import Image
 
-#判断这个像素是不是要抠掉，要被抠掉就返回ture
+#根据容差判断这个像素是不是要抠掉，要被抠掉就返回ture
 def cuttedOrNot(pixdate,color):
     if abs(pixdate[0]-color[0]) <= tolerance and abs(pixdate[1]-color[1]) <= tolerance and abs(pixdate[2]-color[2]) <= tolerance:
         return True

@@ -499,8 +499,9 @@ class Functional_Arithmetic:
         self.Image_V_Scrollbar.blockSignals(False)
 
         for path in path_list:
-            self.images.append(Image.open(path))
-            self.file_names.append(path[(len(path) - path[::-1].find('/')):])
+            if RE_search('(jpg|jpeg|png|webp|bmp|tif|tga|JPG|JPEG|PNG|WEBP|BMP|TIF|TGA)$',path):
+                self.images.append(Image.open(path))
+                self.file_names.append(path[(len(path) - path[::-1].find('/')):])
             
         self.image_index = 1
         self.current_image_image = self.images[self.image_index].copy().convert('RGBA')

@@ -233,6 +233,7 @@ class Functional_Arithmetic:
         #0:由按钮唤起
         #1~4:由半自动唤起
         #5~8:由全自动唤起
+        #9:clean_image唤起
 
         self.system_state.cruuent_image_edited = True
         tolerance = self.all_bottons.tolerance
@@ -299,13 +300,16 @@ class Functional_Arithmetic:
             self.backup_mod.Insert_backup()
             self.system_state.System_free()
 
-        if mode == 1:
+        elif mode == 1:
             t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(0,0,1,))
             t.start()
 
         elif mode == 5:
             t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(0,0,5,))
             t.start()
+
+        elif mode == 9:
+            return
 
     def Clean_image(self,mode):
         #0:由按钮唤起
@@ -442,7 +446,7 @@ class Functional_Arithmetic:
                 color_backup = self.color_lable.color.copy()
                 self.color_lable.color = transparent
 
-                t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(1,))
+                t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(9,))
                 t.start()
                 t.join
 

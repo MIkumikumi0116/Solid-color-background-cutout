@@ -17,6 +17,6 @@ class QLable_File_Dragable(QLabel):
             path_list.pop()
 
         if RE_search('(jpg|jpeg|png|webp|bmp|tif|tga|JPG|JPEG|PNG|WEBP|BMP|TIF|TGA)$',path_list[0]):
-            self.mainWindow.Import_image(path_list)
+            self.functional_arithmetic.Import_image(path_list)
         else:
-            self.mainWindow.Import_path(path_list[0])
+            self.functional_arithmetic.Import_path(path_list[0])

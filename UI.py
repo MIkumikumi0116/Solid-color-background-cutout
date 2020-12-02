@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from QLable_File_Dragable import QLable_File_Dragable
 
 
 class Ui_MainWindow(object):
@@ -620,6 +621,36 @@ class Ui_MainWindow(object):
 "}")
         self.Crop_Button.setObjectName("Crop_Button")
         self.PBotton_Layout.addWidget(self.Crop_Button)
+        self.Clean_Button = QtWidgets.QPushButton(self.Main_Layout)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Clean_Button.sizePolicy().hasHeightForWidth())
+        self.Clean_Button.setSizePolicy(sizePolicy)
+        self.Clean_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Clean_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Clean_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Clean_Button.setObjectName("Clean_Button")
+        self.PBotton_Layout.addWidget(self.Clean_Button)
         self.Revoke_Button = QtWidgets.QPushButton(self.Main_Layout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -771,10 +802,10 @@ class Ui_MainWindow(object):
         self.Full_Automatic_Button.setText(_translate("MainWindow", "全自动"))
         self.Semi_Automatic_Button.setText(_translate("MainWindow", "半自动"))
         self.Crop_Button.setText(_translate("MainWindow", "裁剪"))
+        self.Clean_Button.setText(_translate("MainWindow", "清理"))
         self.Revoke_Button.setText(_translate("MainWindow", "撤销"))
         self.Revoke_Button.setShortcut(_translate("MainWindow", "Ctrl+Z"))
         self.Redo_Button.setText(_translate("MainWindow", "重做"))
         self.Redo_Button.setShortcut(_translate("MainWindow", "Ctrl+Y"))
         self.Save_Botton.setText(_translate("MainWindow", "保存"))
         self.Save_Botton.setShortcut(_translate("MainWindow", "Ctrl+S"))
-from QLable_File_Dragable import QLable_File_Dragable

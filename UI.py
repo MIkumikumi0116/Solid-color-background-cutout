@@ -9,14 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from QLable_File_Dragable import QLable_File_Dragable
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(1470, 845)
+        MainWindow.resize(1470, 903)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -591,6 +590,36 @@ class Ui_MainWindow(object):
 "}")
         self.Semi_Automatic_Button.setObjectName("Semi_Automatic_Button")
         self.PBotton_Layout.addWidget(self.Semi_Automatic_Button)
+        self.Binarization_Button = QtWidgets.QPushButton(self.Main_Layout)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Binarization_Button.sizePolicy().hasHeightForWidth())
+        self.Binarization_Button.setSizePolicy(sizePolicy)
+        self.Binarization_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Binarization_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Binarization_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Binarization_Button.setObjectName("Binarization_Button")
+        self.PBotton_Layout.addWidget(self.Binarization_Button)
         self.Crop_Button = QtWidgets.QPushButton(self.Main_Layout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -801,6 +830,7 @@ class Ui_MainWindow(object):
         self.Next_Button.setText(_translate("MainWindow", "下一张"))
         self.Full_Automatic_Button.setText(_translate("MainWindow", "全自动"))
         self.Semi_Automatic_Button.setText(_translate("MainWindow", "半自动"))
+        self.Binarization_Button.setText(_translate("MainWindow", "二值化"))
         self.Crop_Button.setText(_translate("MainWindow", "裁剪"))
         self.Clean_Button.setText(_translate("MainWindow", "清理"))
         self.Revoke_Button.setText(_translate("MainWindow", "撤销"))
@@ -809,3 +839,4 @@ class Ui_MainWindow(object):
         self.Redo_Button.setShortcut(_translate("MainWindow", "Ctrl+Y"))
         self.Save_Botton.setText(_translate("MainWindow", "保存"))
         self.Save_Botton.setShortcut(_translate("MainWindow", "Ctrl+S"))
+from QLable_File_Dragable import QLable_File_Dragable

@@ -456,6 +456,17 @@ class Functional_Arithmetic:
                 t = THREADING_Thread(target=self.functional_arithmetic.Auto_pick_color,args=(5,))
                 t.start()
 
+    def Image_binaryzation(self):
+        for y in range(self.image_lable.current_image_image.size[1]):
+            for x in range(self.image_lable.current_image_image.size[0]):
+                self.image_lable.current_image_array[y,x] = np.array([255, 255, 255, 255]) if self.image_lable.current_image_array[y,x][3] == 0 else np.array([0, 0, 0, 255])
+
+        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+        self.image_lable.Draw_image_lable()
+
+        self.backup_mod.Insert_backup()
+        self.system_state.System_free()
+
     def Auto_pick_color(self,mode):
         #0:由系统唤起
         #1~4:由半自动唤起
@@ -552,8 +563,8 @@ class Functional_Arithmetic:
         self.image_lable.Set_scrollbar_value(0,0)
         self.image_lable.Set_scrollbar_display()
 
-        self.backup_mod.backup_pin = 0
         self.backup_mod.backups = [self.image_lable.current_image_image.copy()]
+        self.backup_mod.backup_pin = 0
 
         self.image_lable.Set_image_background()
         self.image_lable.Draw_image_lable()
@@ -580,8 +591,8 @@ class Functional_Arithmetic:
         self.image_lable.Set_scrollbar_value(0,0)
         self.image_lable.Set_scrollbar_display()
 
-        self.backup_mod.backup_pin = 0
         self.backup_mod.backups = [self.image_lable.current_image_image.copy()]
+        self.backup_mod.backup_pin = 0
 
         self.image_lable.Set_image_background()
         self.image_lable.Draw_image_lable()
@@ -690,6 +701,7 @@ class System_State(QObject):
         self.mainWindow.Previous_Button.setDisabled(True)
         self.mainWindow.Next_Button.setDisabled(True)
         self.mainWindow.Semi_Automatic_Button.setDisabled(True)
+        self.mainWindow.Binarization_Button.setDisabled(True)
         self.mainWindow.Crop_Button.setDisabled(True)
         self.mainWindow.Clean_Button.setDisabled(True)
         self.mainWindow.Revoke_Button.setDisabled(True)
@@ -722,6 +734,7 @@ class System_State(QObject):
         self.mainWindow.Previous_Button.setEnabled(True)
         self.mainWindow.Next_Button.setEnabled(True)
         self.mainWindow.Semi_Automatic_Button.setEnabled(True)
+        self.mainWindow.Binarization_Button.setEnabled(True)
         self.mainWindow.Crop_Button.setEnabled(True)
         self.mainWindow.Clean_Button.setEnabled(True)
         self.mainWindow.Revoke_Button.setEnabled(True)
@@ -770,6 +783,7 @@ class All_Bottons(QMainWindow):
         self.mainWindow.Next_Button.clicked.connect(self.On_next_button_clicked)
         self.mainWindow.Full_Automatic_Button.clicked.connect(self.On_full_automatic_button_clicked)
         self.mainWindow.Semi_Automatic_Button.clicked.connect(self.On_semi_automatic_button_clicked)
+        self.mainWindow.Binarization_Button.clicked.connect(self.On_binarization_button_clicked)
         self.mainWindow.Crop_Button.clicked.connect(self.On_crop_button_clicked)
         self.mainWindow.Clean_Button.clicked.connect(self.On_clean_button_clicked)
         self.mainWindow.Revoke_Button.clicked.connect(self.On_revoke_button_clicked)
@@ -897,6 +911,13 @@ class All_Bottons(QMainWindow):
     def On_semi_automatic_button_clicked(self):
         if self.system_state.image_loaded:
             self.functional_arithmetic.Auto_pick_color(1) 
+
+    def On_binarization_button_clicked(self):
+        if self.system_state.image_loaded:
+            if not self.system_state.system_busy:
+                self.system_state.System_busy()
+                t = THREADING_Thread(target=self.functional_arithmetic.Image_binaryzation,args=())
+                t.start()
 
     def On_crop_button_clicked(self):
         if self.system_state.image_loaded:

@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(1470, 903)
+        MainWindow.resize(1481, 961)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.Main_Layout)
         self.horizontalLayout.setContentsMargins(-1, 0, -1, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.Image_Layout = QtWidgets.QVBoxLayout()
         self.Image_Layout.setSpacing(0)
@@ -68,14 +68,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.Image_Lable = QLable_File_Dragable(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Image_Lable.sizePolicy().hasHeightForWidth())
-        self.Image_Lable.setSizePolicy(sizePolicy)
         self.Image_Lable.setMinimumSize(QtCore.QSize(1, 1))
         self.Image_Lable.setAcceptDrops(True)
-        self.Image_Lable.setText("")
         self.Image_Lable.setPixmap(QtGui.QPixmap("res/TransparentBg-W.png"))
         self.Image_Lable.setScaledContents(True)
         self.Image_Lable.setObjectName("Image_Lable")
@@ -101,21 +95,18 @@ class Ui_MainWindow(object):
         self.Image_H_Scrollbar.setObjectName("Image_H_Scrollbar")
         self.Image_Layout.addWidget(self.Image_H_Scrollbar)
         self.horizontalLayout.addLayout(self.Image_Layout)
-        spacerItem1 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.Control_Panel_Layout = QtWidgets.QVBoxLayout()
+        self.Control_Panel_Layout.setContentsMargins(-1, 15, -1, 15)
+        self.Control_Panel_Layout.setSpacing(0)
         self.Control_Panel_Layout.setObjectName("Control_Panel_Layout")
-        spacerItem2 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem2)
         self.Color_Layout = QtWidgets.QHBoxLayout()
-        self.Color_Layout.setSpacing(12)
+        self.Color_Layout.setSpacing(15)
         self.Color_Layout.setObjectName("Color_Layout")
+        spacerItem2 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Color_Layout.addItem(spacerItem2)
         self.Color_Preview_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Color_Preview_Lable.sizePolicy().hasHeightForWidth())
-        self.Color_Preview_Lable.setSizePolicy(sizePolicy)
         self.Color_Preview_Lable.setText("")
         self.Color_Preview_Lable.setPixmap(QtGui.QPixmap("res/Transparent_Lable.png"))
         self.Color_Preview_Lable.setScaledContents(True)
@@ -128,11 +119,6 @@ class Ui_MainWindow(object):
         self.R_Layout.setSpacing(5)
         self.R_Layout.setObjectName("R_Layout")
         self.R_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.R_Lable.sizePolicy().hasHeightForWidth())
-        self.R_Lable.setSizePolicy(sizePolicy)
         self.R_Lable.setObjectName("R_Lable")
         self.R_Layout.addWidget(self.R_Lable)
         self.R_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -153,7 +139,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.R_Value.sizePolicy().hasHeightForWidth())
         self.R_Value.setSizePolicy(sizePolicy)
         self.R_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.R_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.R_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
@@ -164,11 +149,6 @@ class Ui_MainWindow(object):
         self.G_Layout.setSpacing(5)
         self.G_Layout.setObjectName("G_Layout")
         self.G_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.G_Lable.sizePolicy().hasHeightForWidth())
-        self.G_Lable.setSizePolicy(sizePolicy)
         self.G_Lable.setObjectName("G_Lable")
         self.G_Layout.addWidget(self.G_Lable)
         self.G_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -189,7 +169,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.G_Value.sizePolicy().hasHeightForWidth())
         self.G_Value.setSizePolicy(sizePolicy)
         self.G_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.G_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.G_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
@@ -200,11 +179,6 @@ class Ui_MainWindow(object):
         self.B_Layout.setSpacing(5)
         self.B_Layout.setObjectName("B_Layout")
         self.B_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.B_Lable.sizePolicy().hasHeightForWidth())
-        self.B_Lable.setSizePolicy(sizePolicy)
         self.B_Lable.setObjectName("B_Lable")
         self.B_Layout.addWidget(self.B_Lable)
         self.B_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -225,7 +199,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.B_Value.sizePolicy().hasHeightForWidth())
         self.B_Value.setSizePolicy(sizePolicy)
         self.B_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.B_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.B_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
@@ -236,11 +209,6 @@ class Ui_MainWindow(object):
         self.A_Layout.setSpacing(5)
         self.A_Layout.setObjectName("A_Layout")
         self.A_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.A_Lable.sizePolicy().hasHeightForWidth())
-        self.A_Lable.setSizePolicy(sizePolicy)
         self.A_Lable.setObjectName("A_Lable")
         self.A_Layout.addWidget(self.A_Lable)
         self.A_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -261,7 +229,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.A_Value.sizePolicy().hasHeightForWidth())
         self.A_Value.setSizePolicy(sizePolicy)
         self.A_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.A_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.A_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
@@ -269,71 +236,50 @@ class Ui_MainWindow(object):
         self.A_Layout.addWidget(self.A_Value)
         self.Color_Setting_Layout.addLayout(self.A_Layout)
         self.Color_Layout.addLayout(self.Color_Setting_Layout)
-        self.Color_Layout.setStretch(1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Color_Layout.addItem(spacerItem3)
+        self.Color_Layout.setStretch(0, 1)
+        self.Color_Layout.setStretch(3, 1)
         self.Control_Panel_Layout.addLayout(self.Color_Layout)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem3)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.Control_Panel_Layout.addItem(spacerItem4)
         self.Working_Status_Label = QtWidgets.QLabel(self.Main_Layout)
         self.Working_Status_Label.setText("")
-        self.Working_Status_Label.setTextFormat(QtCore.Qt.PlainText)
         self.Working_Status_Label.setAlignment(QtCore.Qt.AlignCenter)
         self.Working_Status_Label.setObjectName("Working_Status_Label")
         self.Control_Panel_Layout.addWidget(self.Working_Status_Label)
-        spacerItem4 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem4)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.Control_Panel_Layout.addItem(spacerItem5)
         self.RBotton_Layout = QtWidgets.QHBoxLayout()
         self.RBotton_Layout.setContentsMargins(10, -1, -1, -1)
         self.RBotton_Layout.setObjectName("RBotton_Layout")
+        spacerItem6 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.RBotton_Layout.addItem(spacerItem6)
         self.Cutout_RadioB = QtWidgets.QRadioButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Cutout_RadioB.sizePolicy().hasHeightForWidth())
-        self.Cutout_RadioB.setSizePolicy(sizePolicy)
-        self.Cutout_RadioB.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Cutout_RadioB.setChecked(True)
         self.Cutout_RadioB.setObjectName("Cutout_RadioB")
         self.RBotton_Layout.addWidget(self.Cutout_RadioB)
         self.PickColor_RadioB = QtWidgets.QRadioButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.PickColor_RadioB.sizePolicy().hasHeightForWidth())
-        self.PickColor_RadioB.setSizePolicy(sizePolicy)
-        self.PickColor_RadioB.setFocusPolicy(QtCore.Qt.NoFocus)
         self.PickColor_RadioB.setObjectName("PickColor_RadioB")
         self.RBotton_Layout.addWidget(self.PickColor_RadioB)
         self.Coloring_RadioB = QtWidgets.QRadioButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Coloring_RadioB.sizePolicy().hasHeightForWidth())
-        self.Coloring_RadioB.setSizePolicy(sizePolicy)
-        self.Coloring_RadioB.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Coloring_RadioB.setObjectName("Coloring_RadioB")
         self.RBotton_Layout.addWidget(self.Coloring_RadioB)
         self.Filling_RadioB = QtWidgets.QRadioButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Filling_RadioB.sizePolicy().hasHeightForWidth())
-        self.Filling_RadioB.setSizePolicy(sizePolicy)
-        self.Filling_RadioB.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Filling_RadioB.setObjectName("Filling_RadioB")
         self.RBotton_Layout.addWidget(self.Filling_RadioB)
+        spacerItem7 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.RBotton_Layout.addItem(spacerItem7)
+        self.RBotton_Layout.setStretch(0, 1)
+        self.RBotton_Layout.setStretch(5, 1)
         self.Control_Panel_Layout.addLayout(self.RBotton_Layout)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem5)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.Control_Panel_Layout.addItem(spacerItem8)
         self.T_Layout = QtWidgets.QHBoxLayout()
-        self.T_Layout.setContentsMargins(30, -1, 30, -1)
-        self.T_Layout.setSpacing(5)
         self.T_Layout.setObjectName("T_Layout")
+        spacerItem9 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.T_Layout.addItem(spacerItem9)
         self.T_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.T_Lable.sizePolicy().hasHeightForWidth())
-        self.T_Lable.setSizePolicy(sizePolicy)
         self.T_Lable.setObjectName("T_Lable")
         self.T_Layout.addWidget(self.T_Lable)
         self.T_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -353,23 +299,23 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.T_Value.sizePolicy().hasHeightForWidth())
         self.T_Value.setSizePolicy(sizePolicy)
         self.T_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.T_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.T_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
         self.T_Value.setObjectName("T_Value")
         self.T_Layout.addWidget(self.T_Value)
+        spacerItem10 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.T_Layout.addItem(spacerItem10)
+        self.T_Layout.setStretch(0, 2)
+        self.T_Layout.setStretch(4, 2)
         self.Control_Panel_Layout.addLayout(self.T_Layout)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.Control_Panel_Layout.addItem(spacerItem11)
         self.S_Layout = QtWidgets.QHBoxLayout()
-        self.S_Layout.setContentsMargins(30, -1, 30, -1)
-        self.S_Layout.setSpacing(5)
         self.S_Layout.setObjectName("S_Layout")
+        spacerItem12 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.S_Layout.addItem(spacerItem12)
         self.S_Lable = QtWidgets.QLabel(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.S_Lable.sizePolicy().hasHeightForWidth())
-        self.S_Lable.setSizePolicy(sizePolicy)
         self.S_Lable.setObjectName("S_Lable")
         self.S_Layout.addWidget(self.S_Lable)
         self.S_Scrollbar = QtWidgets.QScrollBar(self.Main_Layout)
@@ -391,333 +337,27 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.S_Value.sizePolicy().hasHeightForWidth())
         self.S_Value.setSizePolicy(sizePolicy)
         self.S_Value.setMinimumSize(QtCore.QSize(50, 0))
-        self.S_Value.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.S_Value.setStyleSheet("color:white;\n"
 "background-color:rgb(70 , 70 , 70);\n"
 "border: 1px solid rgb(28 , 28 , 28);")
         self.S_Value.setObjectName("S_Value")
         self.S_Layout.addWidget(self.S_Value)
+        spacerItem13 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.S_Layout.addItem(spacerItem13)
+        self.S_Layout.setStretch(0, 2)
+        self.S_Layout.setStretch(4, 2)
         self.Control_Panel_Layout.addLayout(self.S_Layout)
-        spacerItem6 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem6)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.Control_Panel_Layout.addItem(spacerItem14)
         self.Botton_Layout_2 = QtWidgets.QHBoxLayout()
         self.Botton_Layout_2.setObjectName("Botton_Layout_2")
-        spacerItem7 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.Botton_Layout_2.addItem(spacerItem7)
+        spacerItem15 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Botton_Layout_2.addItem(spacerItem15)
         self.Botton_Layout = QtWidgets.QVBoxLayout()
-        self.Botton_Layout.setSpacing(20)
+        self.Botton_Layout.setSpacing(25)
         self.Botton_Layout.setObjectName("Botton_Layout")
-        self.PBotton_Layout = QtWidgets.QVBoxLayout()
-        self.PBotton_Layout.setSpacing(30)
-        self.PBotton_Layout.setObjectName("PBotton_Layout")
-        self.WorkDir_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.WorkDir_Button.sizePolicy().hasHeightForWidth())
-        self.WorkDir_Button.setSizePolicy(sizePolicy)
-        self.WorkDir_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.WorkDir_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.WorkDir_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.WorkDir_Button.setObjectName("WorkDir_Button")
-        self.PBotton_Layout.addWidget(self.WorkDir_Button)
-        self.Change_Background_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Change_Background_Button.sizePolicy().hasHeightForWidth())
-        self.Change_Background_Button.setSizePolicy(sizePolicy)
-        self.Change_Background_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Change_Background_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Change_Background_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Change_Background_Button.setObjectName("Change_Background_Button")
-        self.PBotton_Layout.addWidget(self.Change_Background_Button)
-        self.Previous_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Previous_Button.sizePolicy().hasHeightForWidth())
-        self.Previous_Button.setSizePolicy(sizePolicy)
-        self.Previous_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Previous_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Previous_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Previous_Button.setObjectName("Previous_Button")
-        self.PBotton_Layout.addWidget(self.Previous_Button)
-        self.Next_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Next_Button.sizePolicy().hasHeightForWidth())
-        self.Next_Button.setSizePolicy(sizePolicy)
-        self.Next_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Next_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Next_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Next_Button.setObjectName("Next_Button")
-        self.PBotton_Layout.addWidget(self.Next_Button)
-        self.Full_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Full_Automatic_Button.sizePolicy().hasHeightForWidth())
-        self.Full_Automatic_Button.setSizePolicy(sizePolicy)
-        self.Full_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Full_Automatic_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Full_Automatic_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Full_Automatic_Button.setObjectName("Full_Automatic_Button")
-        self.PBotton_Layout.addWidget(self.Full_Automatic_Button)
-        self.Semi_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Semi_Automatic_Button.sizePolicy().hasHeightForWidth())
-        self.Semi_Automatic_Button.setSizePolicy(sizePolicy)
-        self.Semi_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Semi_Automatic_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Semi_Automatic_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Semi_Automatic_Button.setObjectName("Semi_Automatic_Button")
-        self.PBotton_Layout.addWidget(self.Semi_Automatic_Button)
-        self.Binarization_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Binarization_Button.sizePolicy().hasHeightForWidth())
-        self.Binarization_Button.setSizePolicy(sizePolicy)
-        self.Binarization_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Binarization_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Binarization_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Binarization_Button.setObjectName("Binarization_Button")
-        self.PBotton_Layout.addWidget(self.Binarization_Button)
-        self.Crop_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Crop_Button.sizePolicy().hasHeightForWidth())
-        self.Crop_Button.setSizePolicy(sizePolicy)
-        self.Crop_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Crop_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Crop_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Crop_Button.setObjectName("Crop_Button")
-        self.PBotton_Layout.addWidget(self.Crop_Button)
-        self.Clean_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Clean_Button.sizePolicy().hasHeightForWidth())
-        self.Clean_Button.setSizePolicy(sizePolicy)
-        self.Clean_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Clean_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Clean_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Clean_Button.setObjectName("Clean_Button")
-        self.PBotton_Layout.addWidget(self.Clean_Button)
-        self.Revoke_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Revoke_Button.sizePolicy().hasHeightForWidth())
-        self.Revoke_Button.setSizePolicy(sizePolicy)
-        self.Revoke_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Revoke_Button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.Revoke_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Revoke_Button.setObjectName("Revoke_Button")
-        self.PBotton_Layout.addWidget(self.Revoke_Button)
         self.Redo_Button = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Redo_Button.sizePolicy().hasHeightForWidth())
-        self.Redo_Button.setSizePolicy(sizePolicy)
         self.Redo_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Redo_Button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Redo_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -739,15 +379,249 @@ class Ui_MainWindow(object):
 "border: 1px solid rgb(28 , 28 , 28);\n"
 "}")
         self.Redo_Button.setObjectName("Redo_Button")
-        self.PBotton_Layout.addWidget(self.Redo_Button)
+        self.Botton_Layout.addWidget(self.Redo_Button)
+        self.Revoke_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Revoke_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Revoke_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Revoke_Button.setObjectName("Revoke_Button")
+        self.Botton_Layout.addWidget(self.Revoke_Button)
+        self.Crop_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Crop_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Crop_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Crop_Button.setObjectName("Crop_Button")
+        self.Botton_Layout.addWidget(self.Crop_Button)
+        self.Binarization_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Binarization_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Binarization_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Binarization_Button.setObjectName("Binarization_Button")
+        self.Botton_Layout.addWidget(self.Binarization_Button)
+        self.WorkDir_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.WorkDir_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.WorkDir_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.WorkDir_Button.setObjectName("WorkDir_Button")
+        self.Botton_Layout.addWidget(self.WorkDir_Button)
+        self.Semi_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Semi_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Semi_Automatic_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Semi_Automatic_Button.setObjectName("Semi_Automatic_Button")
+        self.Botton_Layout.addWidget(self.Semi_Automatic_Button)
+        self.Previous_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Previous_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Previous_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Previous_Button.setObjectName("Previous_Button")
+        self.Botton_Layout.addWidget(self.Previous_Button)
+        self.Change_Background_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Change_Background_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Change_Background_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Change_Background_Button.setObjectName("Change_Background_Button")
+        self.Botton_Layout.addWidget(self.Change_Background_Button)
+        self.Clean_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Clean_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Clean_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Clean_Button.setObjectName("Clean_Button")
+        self.Botton_Layout.addWidget(self.Clean_Button)
+        self.Full_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Full_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Full_Automatic_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Full_Automatic_Button.setObjectName("Full_Automatic_Button")
+        self.Botton_Layout.addWidget(self.Full_Automatic_Button)
+        self.Next_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Next_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Next_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Next_Button.setObjectName("Next_Button")
+        self.Botton_Layout.addWidget(self.Next_Button)
         self.Save_Botton = QtWidgets.QPushButton(self.Main_Layout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Save_Botton.sizePolicy().hasHeightForWidth())
-        self.Save_Botton.setSizePolicy(sizePolicy)
         self.Save_Botton.setMinimumSize(QtCore.QSize(0, 28))
-        self.Save_Botton.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Save_Botton.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -769,29 +643,18 @@ class Ui_MainWindow(object):
 "border: 1px solid rgb(28 , 28 , 28);\n"
 "}")
         self.Save_Botton.setObjectName("Save_Botton")
-        self.PBotton_Layout.addWidget(self.Save_Botton)
-        self.Botton_Layout.addLayout(self.PBotton_Layout)
-        self.Botton_Layout.setStretch(0, 5)
+        self.Botton_Layout.addWidget(self.Save_Botton)
         self.Botton_Layout_2.addLayout(self.Botton_Layout)
-        spacerItem8 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.Botton_Layout_2.addItem(spacerItem8)
+        spacerItem16 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Botton_Layout_2.addItem(spacerItem16)
         self.Botton_Layout_2.setStretch(0, 1)
         self.Botton_Layout_2.setStretch(1, 3)
         self.Botton_Layout_2.setStretch(2, 1)
         self.Control_Panel_Layout.addLayout(self.Botton_Layout_2)
-        spacerItem9 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.Control_Panel_Layout.addItem(spacerItem9)
-        self.Control_Panel_Layout.setStretch(0, 2)
-        self.Control_Panel_Layout.setStretch(1, 2)
-        self.Control_Panel_Layout.setStretch(2, 1)
-        self.Control_Panel_Layout.setStretch(4, 1)
-        self.Control_Panel_Layout.setStretch(6, 1)
-        self.Control_Panel_Layout.setStretch(9, 1)
-        self.Control_Panel_Layout.setStretch(11, 2)
         self.horizontalLayout.addLayout(self.Control_Panel_Layout)
-        spacerItem10 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem10)
-        self.horizontalLayout.setStretch(0, 1)
+        spacerItem17 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem17)
+        self.horizontalLayout.setStretch(0, 2)
         self.horizontalLayout.setStretch(1, 19)
         self.horizontalLayout.setStretch(2, 2)
         self.horizontalLayout.setStretch(3, 8)
@@ -824,19 +687,19 @@ class Ui_MainWindow(object):
         self.T_Value.setText(_translate("MainWindow", "0"))
         self.S_Lable.setText(_translate("MainWindow", "笔刷"))
         self.S_Value.setText(_translate("MainWindow", "1"))
-        self.WorkDir_Button.setText(_translate("MainWindow", "选择目录"))
-        self.Change_Background_Button.setText(_translate("MainWindow", "更换背景"))
-        self.Previous_Button.setText(_translate("MainWindow", "上一张"))
-        self.Next_Button.setText(_translate("MainWindow", "下一张"))
-        self.Full_Automatic_Button.setText(_translate("MainWindow", "全自动"))
-        self.Semi_Automatic_Button.setText(_translate("MainWindow", "半自动"))
-        self.Binarization_Button.setText(_translate("MainWindow", "二值化"))
-        self.Crop_Button.setText(_translate("MainWindow", "裁剪"))
-        self.Clean_Button.setText(_translate("MainWindow", "清理"))
-        self.Revoke_Button.setText(_translate("MainWindow", "撤销"))
-        self.Revoke_Button.setShortcut(_translate("MainWindow", "Ctrl+Z"))
         self.Redo_Button.setText(_translate("MainWindow", "重做"))
         self.Redo_Button.setShortcut(_translate("MainWindow", "Ctrl+Y"))
+        self.Revoke_Button.setText(_translate("MainWindow", "撤销"))
+        self.Revoke_Button.setShortcut(_translate("MainWindow", "Ctrl+Z"))
+        self.Crop_Button.setText(_translate("MainWindow", "裁剪"))
+        self.Binarization_Button.setText(_translate("MainWindow", "二值化"))
+        self.WorkDir_Button.setText(_translate("MainWindow", "选择目录"))
+        self.Semi_Automatic_Button.setText(_translate("MainWindow", "半自动"))
+        self.Previous_Button.setText(_translate("MainWindow", "上一张"))
+        self.Change_Background_Button.setText(_translate("MainWindow", "更换背景"))
+        self.Clean_Button.setText(_translate("MainWindow", "清理"))
+        self.Full_Automatic_Button.setText(_translate("MainWindow", "全自动"))
+        self.Next_Button.setText(_translate("MainWindow", "下一张"))
         self.Save_Botton.setText(_translate("MainWindow", "保存"))
         self.Save_Botton.setShortcut(_translate("MainWindow", "Ctrl+S"))
 from QLable_File_Dragable import QLable_File_Dragable

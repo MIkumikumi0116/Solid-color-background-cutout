@@ -1383,7 +1383,7 @@ class Mouse_And_Key_Events(QWidget):
             self.mouse_and_key_events.draging = False
 
 
-class MainW_indow(QMainWindow,Ui_MainWindow):
+class MainW_indow(QMainWindow,Ui_Main_Window_UI):
     def __init__(self):
         QMainWindow.__init__(self)
 

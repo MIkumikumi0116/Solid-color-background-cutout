@@ -8,7 +8,9 @@ from sys import exit as SYS_exit
 from re import search as RE_search
 from copy import deepcopy as COPY_deepcopy
 from threading import Thread as THREADING_Thread
-from UI import Ui_MainWindow
+
+from Main_Window_UI import Ui_Main_Window_UI
+
 from PyQt5.Qt import QPoint
 from PyQt5.QtGui import QPixmap,QIntValidator
 from PyQt5.QtCore import Qt,QTimer,pyqtSignal,QObject
@@ -25,8 +27,8 @@ DRAW_INTERAL_CLEAN = 20
 
 
 class Functional_Arithmetic:
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
         pass
 
     def Cutout_image(self,x0,y0,mode):
@@ -150,10 +152,10 @@ class Functional_Arithmetic:
 
     def Pick_color(self,x0,y0):
         self.color_lable.color = list(self.image_lable.current_image_array[y0,x0])
-        self.mainWindow.R_Value.setText(str(self.color_lable.color[0]))
-        self.mainWindow.G_Value.setText(str(self.color_lable.color[1]))
-        self.mainWindow.B_Value.setText(str(self.color_lable.color[2]))
-        self.mainWindow.A_Value.setText(str(self.color_lable.color[3]))
+        self.main_window.R_LineEdit.setText(str(self.color_lable.color[0]))
+        self.main_window.G_LineEdit.setText(str(self.color_lable.color[1]))
+        self.main_window.B_LineEdit.setText(str(self.color_lable.color[2]))
+        self.main_window.A_LineEdit.setText(str(self.color_lable.color[3]))
 
     def Coloring_image(self,x0,y0):
         self.system_state.cruuent_image_edited = True
@@ -503,10 +505,10 @@ class Functional_Arithmetic:
                 color = k
                 break
 
-        self.mainWindow.R_Value.setText(str(color[0]))
-        self.mainWindow.G_Value.setText(str(color[1]))
-        self.mainWindow.B_Value.setText(str(color[2]))
-        self.mainWindow.A_Value.setText(str(color[3]))
+        self.main_window.R_LineEdit.setText(str(color[0]))
+        self.main_window.G_LineEdit.setText(str(color[1]))
+        self.main_window.B_LineEdit.setText(str(color[2]))
+        self.main_window.A_LineEdit.setText(str(color[3]))
 
         if mode == 1:
             self.system_state.System_busy()
@@ -547,7 +549,7 @@ class Functional_Arithmetic:
             break
 
         if len(self.system_state.images) <= 1:
-            QMessageBox.question(self.mainWindow,'这个目录里没有图片','小老弟你怎么回事？',QMessageBox.Yes)
+            QMessageBox.question(self.main_window,'这个目录里没有图片','小老弟你怎么回事？',QMessageBox.Yes)
             self.system_state.images = images_backup
             self.system_state.image_index = image_index_backup
             self.system_state.file_names = file_names_backup
@@ -597,15 +599,16 @@ class Functional_Arithmetic:
         self.image_lable.Set_image_background()
         self.image_lable.Draw_image_lable()
 
+
 class Backup_Mod:
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
 
         self.backups = []
         self.backup_pin = 0
         
     def Insert_backup(self):
-        self.mainWindow.Working_Status_Label.setText('')
+        self.main_window.Working_Status_Label.setText('')
         if not self.backup_mod.backup_pin == len(self.backups) - 1:
             for i in range(self.backup_mod.backup_pin + 1,len(self.backups)):
                 self.backups.pop()
@@ -623,39 +626,40 @@ class Backup_Mod:
     def Revoke_backup(self):
         if self.system_state.image_loaded:
             if self.system_state.tomede:
-                self.mainWindow.Working_Status_Label.setText('')
+                self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin].copy()
                 self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
                 self.image_lable.Draw_image_lable()
 
             elif self.backup_mod.backup_pin > 0:
-                self.mainWindow.Working_Status_Label.setText('')
+                self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin - 1].copy()
                 self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
                 self.backup_mod.backup_pin -= 1
                 self.image_lable.Draw_image_lable()
 
             elif self.backup_mod.backup_pin == 0:
-                self.mainWindow.Working_Status_Label.setText('已经没有备份了')
+                self.main_window.Working_Status_Label.setText('已经没有备份了')
 
     def Redo_backup(self):
         if self.system_state.image_loaded:
             if not self.backup_mod.backup_pin == len(self.backups) - 1:
-                self.mainWindow.Working_Status_Label.setText('')
+                self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin + 1].copy()
                 self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
                 self.backup_mod.backup_pin += 1
                 self.image_lable.Draw_image_lable()
 
             else:
-                self.mainWindow.Working_Status_Label.setText('已经没有备份了')
+                self.main_window.Working_Status_Label.setText('已经没有备份了')
+
 
 class System_State(QObject):
     start_timer = pyqtSignal()
     end_timer = pyqtSignal()
 
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
         QObject.__init__(self)
 
         self.tomede = False
@@ -680,69 +684,69 @@ class System_State(QObject):
         self.system_state.Update_working_status()
         self.system_state.start_timer.emit()
         
-        if self.mainWindow.Cutout_RadioB.isChecked():
+        if self.main_window.Cutout_RadioB.isChecked():
             self.all_bottons.radio_button_state = 1
-        elif self.mainWindow.PickColor_RadioB.isChecked():
+        elif self.main_window.PickColor_RadioB.isChecked():
             self.all_bottons.radio_button_state = 2
-        elif self.mainWindow.Coloring_RadioB.isChecked():
+        elif self.main_window.Coloring_RadioB.isChecked():
             self.all_bottons.radio_button_state = 3
-        elif self.mainWindow.Filling_RadioB.isChecked():
+        elif self.main_window.Filling_RadioB.isChecked():
             self.all_bottons.radio_button_state = 4
 
-        self.mainWindow.Cutout_RadioB.setCheckable(False)
-        self.mainWindow.PickColor_RadioB.setCheckable(False)
-        self.mainWindow.Coloring_RadioB.setCheckable(False)
-        self.mainWindow.Filling_RadioB.setCheckable(False)
+        self.main_window.Cutout_RadioB.setCheckable(False)
+        self.main_window.PickColor_RadioB.setCheckable(False)
+        self.main_window.Coloring_RadioB.setCheckable(False)
+        self.main_window.Filling_RadioB.setCheckable(False)
 
-        self.mainWindow.Full_Automatic_Button.setText('团长！团长停下来啊！')
+        self.main_window.Full_Automatic_Button.setText('团长！团长停下来啊！')
 
-        self.mainWindow.WorkDir_Button.setDisabled(True)
-        self.mainWindow.Change_Background_Button.setDisabled(True)
-        self.mainWindow.Previous_Button.setDisabled(True)
-        self.mainWindow.Next_Button.setDisabled(True)
-        self.mainWindow.Semi_Automatic_Button.setDisabled(True)
-        self.mainWindow.Binarization_Button.setDisabled(True)
-        self.mainWindow.Crop_Button.setDisabled(True)
-        self.mainWindow.Clean_Button.setDisabled(True)
-        self.mainWindow.Revoke_Button.setDisabled(True)
-        self.mainWindow.Redo_Button.setDisabled(True)
-        self.mainWindow.Save_Botton.setDisabled(True)
+        self.main_window.WorkDir_Button.setDisabled(True)
+        self.main_window.Change_Background_Button.setDisabled(True)
+        self.main_window.Previous_Button.setDisabled(True)
+        self.main_window.Next_Button.setDisabled(True)
+        self.main_window.Semi_Automatic_Button.setDisabled(True)
+        self.main_window.Binarization_Button.setDisabled(True)
+        self.main_window.Crop_Button.setDisabled(True)
+        self.main_window.Clean_Button.setDisabled(True)
+        self.main_window.Revoke_Button.setDisabled(True)
+        self.main_window.Redo_Button.setDisabled(True)
+        self.main_window.Save_Botton.setDisabled(True)
 
     def System_free(self):
         self.system_state.tomede = False
         self.system_state.system_busy = False
         self.system_state.end_timer.emit()
      
-        self.mainWindow.Cutout_RadioB.setCheckable(True)
-        self.mainWindow.PickColor_RadioB.setCheckable(True)
-        self.mainWindow.Coloring_RadioB.setCheckable(True)
-        self.mainWindow.Filling_RadioB.setCheckable(True)
+        self.main_window.Cutout_RadioB.setCheckable(True)
+        self.main_window.PickColor_RadioB.setCheckable(True)
+        self.main_window.Coloring_RadioB.setCheckable(True)
+        self.main_window.Filling_RadioB.setCheckable(True)
 
         if self.all_bottons.radio_button_state == 1:
-            self.mainWindow.Cutout_RadioB.setChecked(True)
+            self.main_window.Cutout_RadioB.setChecked(True)
         elif self.all_bottons.radio_button_state == 2:
-            self.mainWindow.PickColor_RadioB.setChecked(True)
+            self.main_window.PickColor_RadioB.setChecked(True)
         elif self.all_bottons.radio_button_state == 3:
-            self.mainWindow.Coloring_RadioB.setChecked(True)
+            self.main_window.Coloring_RadioB.setChecked(True)
         elif self.all_bottons.radio_button_state == 4:
-            self.mainWindow.Filling_RadioB.setChecked(True)
+            self.main_window.Filling_RadioB.setChecked(True)
 
-        self.mainWindow.Full_Automatic_Button.setText('全自动')
+        self.main_window.Full_Automatic_Button.setText('全自动')
 
-        self.mainWindow.WorkDir_Button.setEnabled(True)
-        self.mainWindow.Change_Background_Button.setEnabled(True)
-        self.mainWindow.Previous_Button.setEnabled(True)
-        self.mainWindow.Next_Button.setEnabled(True)
-        self.mainWindow.Semi_Automatic_Button.setEnabled(True)
-        self.mainWindow.Binarization_Button.setEnabled(True)
-        self.mainWindow.Crop_Button.setEnabled(True)
-        self.mainWindow.Clean_Button.setEnabled(True)
-        self.mainWindow.Revoke_Button.setEnabled(True)
-        self.mainWindow.Redo_Button.setEnabled(True)
-        self.mainWindow.Save_Botton.setEnabled(True)
+        self.main_window.WorkDir_Button.setEnabled(True)
+        self.main_window.Change_Background_Button.setEnabled(True)
+        self.main_window.Previous_Button.setEnabled(True)
+        self.main_window.Next_Button.setEnabled(True)
+        self.main_window.Semi_Automatic_Button.setEnabled(True)
+        self.main_window.Binarization_Button.setEnabled(True)
+        self.main_window.Crop_Button.setEnabled(True)
+        self.main_window.Clean_Button.setEnabled(True)
+        self.main_window.Revoke_Button.setEnabled(True)
+        self.main_window.Redo_Button.setEnabled(True)
+        self.main_window.Save_Botton.setEnabled(True)
 
     def Update_working_status(self):
-        self.mainWindow.Working_Status_Label.setText(self.system_state.working_status_text[self.system_state.working_status_pin])
+        self.main_window.Working_Status_Label.setText(self.system_state.working_status_text[self.system_state.working_status_pin])
         self.system_state.working_status_pin = self.system_state.working_status_pin + 1 if self.system_state.working_status_pin < 3 else 0
 
     def Start_timer(self):
@@ -751,97 +755,94 @@ class System_State(QObject):
 
     def End_timer(self):
         self.system_state.timer.stop()
-        self.mainWindow.Working_Status_Label.setText('')
+        self.main_window.Working_Status_Label.setText('')
 
     def closeEvent(self,event):
         if self.system_state.image_loaded and self.system_state.cruuent_image_edited:
             self.functional_arithmetic.Save_image()
 
+
 class All_Bottons(QMainWindow):
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
 
         QMainWindow.__init__(self)
         intValidator = QIntValidator(self)
         intValidator.setRange(0,255)
-        self.mainWindow.T_Value.setValidator(intValidator)
+        self.main_window.T_LineEdit.setValidator(intValidator)
         intValidator.setRange(1,255)
-        self.mainWindow.S_Value.setValidator(intValidator)
+        self.main_window.S_LineEdit.setValidator(intValidator)
 
         self.tolerance = 0
         self.brush_size = 1
         self.radio_button_state = 1
 
-        self.mainWindow.T_Scrollbar.valueChanged.connect(self.On_T_scrollbar_valueChanged)
-        self.mainWindow.S_Scrollbar.valueChanged.connect(self.On_S_scrollbar_valueChanged)
-        self.mainWindow.T_Value.textChanged.connect(self.On_T_value_textChanged)
-        self.mainWindow.S_Value.textChanged.connect(self.On_S_value_textChanged)
+        self.main_window.T_LineEdit.textChanged.connect(self.On_T_lineedit_textChanged)
+        self.main_window.S_LineEdit.textChanged.connect(self.On_S_lineedit_textChanged)
+        self.main_window.T_Scrollbar.valueChanged.connect(self.On_T_scrollbar_valueChanged)
+        self.main_window.S_Scrollbar.valueChanged.connect(self.On_S_scrollbar_valueChanged)
 
-        self.mainWindow.WorkDir_Button.clicked.connect(self.On_workDir_button_clicked)
-        self.mainWindow.Change_Background_Button.clicked.connect(self.On_change_background_button_clicked)
-        self.mainWindow.Previous_Button.clicked.connect(self.On_previous_button_clicked)
-        self.mainWindow.Next_Button.clicked.connect(self.On_next_button_clicked)
-        self.mainWindow.Full_Automatic_Button.clicked.connect(self.On_full_automatic_button_clicked)
-        self.mainWindow.Semi_Automatic_Button.clicked.connect(self.On_semi_automatic_button_clicked)
-        self.mainWindow.Binarization_Button.clicked.connect(self.On_binarization_button_clicked)
-        self.mainWindow.Crop_Button.clicked.connect(self.On_crop_button_clicked)
-        self.mainWindow.Clean_Button.clicked.connect(self.On_clean_button_clicked)
-        self.mainWindow.Revoke_Button.clicked.connect(self.On_revoke_button_clicked)
-        self.mainWindow.Redo_Button.clicked.connect(self.On_redo_button_clicked)
-        self.mainWindow.Save_Botton.clicked.connect(self.On_save_button_clicked)
+        self.main_window.WorkDir_Button.clicked.connect(self.On_workDir_button_clicked)
+        self.main_window.Change_Background_Button.clicked.connect(self.On_change_background_button_clicked)
+        self.main_window.Previous_Button.clicked.connect(self.On_previous_button_clicked)
+        self.main_window.Next_Button.clicked.connect(self.On_next_button_clicked)
+        self.main_window.Full_Automatic_Button.clicked.connect(self.On_full_automatic_button_clicked)
+        self.main_window.Semi_Automatic_Button.clicked.connect(self.On_semi_automatic_button_clicked)
+        self.main_window.Binarization_Button.clicked.connect(self.On_binarization_button_clicked)
+        self.main_window.Crop_Button.clicked.connect(self.On_crop_button_clicked)
+        self.main_window.Clean_Button.clicked.connect(self.On_clean_button_clicked)
+        self.main_window.Revoke_Button.clicked.connect(self.On_revoke_button_clicked)
+        self.main_window.Redo_Button.clicked.connect(self.On_redo_button_clicked)
+        self.main_window.Save_Botton.clicked.connect(self.On_save_button_clicked)
        
-    def On_T_scrollbar_valueChanged(self):
-        self.mainWindow.T_Value.setText(str(self.mainWindow.T_Scrollbar.value()))
-        pass
-
-    def On_S_scrollbar_valueChanged(self):
-        self.mainWindow.S_Value.setText(str(self.mainWindow.S_Scrollbar.value()))
-        pass
-
-    def On_T_value_textChanged(self):
-        text = self.mainWindow.T_Value.text()
+    def On_T_lineedit_textChanged(self):
+        text = self.main_window.T_LineEdit.text()
 
         if len(text) == 0:
             text = '0'
-            self.mainWindow.T_Value.setText(text)
+            self.main_window.T_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
                 text = '0'
 
-        self.mainWindow.T_Scrollbar.setValue(eval(text))
+        self.main_window.T_Scrollbar.setValue(eval(text))
         self.all_bottons.tolerance = eval(text)
 
-    def On_S_value_textChanged(self):
-        text = self.mainWindow.S_Value.text()
+    def On_S_lineedit_textChanged(self):
+        text = self.main_window.S_LineEdit.text()
 
         if len(text) == 0:
             text = '1'
-            self.mainWindow.S_Value.setText(text)
+            self.main_window.S_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
-                text = '0'
+                text = '1'
 
-        self.mainWindow.S_Scrollbar.setValue(eval(text))
+        self.main_window.S_Scrollbar.setValue(eval(text))
         self.all_bottons.brush_size = eval(text)
 
+    def On_T_scrollbar_valueChanged(self):
+        self.main_window.T_LineEdit.setText(str(self.main_window.T_Scrollbar.value()))
+        pass
+
+    def On_S_scrollbar_valueChanged(self):
+        self.main_window.S_LineEdit.setText(str(self.main_window.S_Scrollbar.value()))
+        pass
+
     def On_workDir_button_clicked(self):
-        workroot = QFileDialog.getExistingDirectory(self.mainWindow,'文件目录')
+        workroot = QFileDialog.getExistingDirectory(self.main_window,'文件目录')
         if workroot == '':
             return
 
-        self.mainWindow.Working_Status_Label.setText('')
+        self.main_window.Working_Status_Label.setText('')
         self.functional_arithmetic.Import_path(workroot)
 
     def On_change_background_button_clicked(self):
@@ -850,7 +851,7 @@ class All_Bottons(QMainWindow):
         else:
             self.image_lable.image_lable_background = self.image_lable.image_lable_background_W
 
-        self.mainWindow.Working_Status_Label.setText('')
+        self.main_window.Working_Status_Label.setText('')
         self.image_lable.Draw_image_lable() 
 
     def On_previous_button_clicked(self):
@@ -869,13 +870,13 @@ class All_Bottons(QMainWindow):
             self.image_lable.Set_scrollbar_value(0,0)
             self.image_lable.Set_scrollbar_display()
             self.system_state.cruuent_image_edited = False
-            self.mainWindow.Working_Status_Label.setText('')
+            self.main_window.Working_Status_Label.setText('')
 
             self.image_lable.Set_image_background()
             self.image_lable.Draw_image_lable()
             
         elif self.system_state.image_index == 1:
-            self.mainWindow.Working_Status_Label.setText('这是第一张了')
+            self.main_window.Working_Status_Label.setText('这是第一张了')
 
     def On_next_button_clicked(self):
         if self.system_state.image_loaded and self.system_state.image_index < len(self.system_state.images) - 1: 
@@ -893,13 +894,13 @@ class All_Bottons(QMainWindow):
             self.image_lable.Set_scrollbar_value(0,0)
             self.image_lable.Set_scrollbar_display()
             self.system_state.cruuent_image_edited = False
-            self.mainWindow.Working_Status_Label.setText('')
+            self.main_window.Working_Status_Label.setText('')
 
             self.image_lable.Set_image_background()
             self.image_lable.Draw_image_lable()
 
         elif self.system_state.image_index == len(self.system_state.images) - 1:
-            self.mainWindow.Working_Status_Label.setText('这是最后一张了')
+            self.main_window.Working_Status_Label.setText('这是最后一张了')
 
     def On_full_automatic_button_clicked(self):
         if self.system_state.image_loaded:
@@ -940,30 +941,31 @@ class All_Bottons(QMainWindow):
         pass
 
     def On_save_button_clicked(self):
-        self.mainWindow.Working_Status_Label.setText('')
+        self.main_window.Working_Status_Label.setText('')
         self.functional_arithmetic.Save_image()
 
+
 class Color_Lable(QMainWindow):
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
 
         QMainWindow.__init__(self)
         intValidator = QIntValidator(self)
         intValidator.setRange(0,255)
-        self.mainWindow.R_Value.setValidator(intValidator)
-        self.mainWindow.G_Value.setValidator(intValidator)
-        self.mainWindow.B_Value.setValidator(intValidator)
-        self.mainWindow.A_Value.setValidator(intValidator)
+        self.main_window.R_LineEdit.setValidator(intValidator)
+        self.main_window.G_LineEdit.setValidator(intValidator)
+        self.main_window.B_LineEdit.setValidator(intValidator)
+        self.main_window.A_LineEdit.setValidator(intValidator)
 
-        self.mainWindow.R_Scrollbar.valueChanged.connect(self.On_R_scrollbar_valueChanged)
-        self.mainWindow.G_Scrollbar.valueChanged.connect(self.On_G_scrollbar_valueChanged)
-        self.mainWindow.B_Scrollbar.valueChanged.connect(self.On_B_scrollbar_valueChanged)
-        self.mainWindow.A_Scrollbar.valueChanged.connect(self.On_A_scrollbar_valueChanged)
+        self.main_window.R_LineEdit.textChanged.connect(self.On_R_lineEdit_textChanged)
+        self.main_window.G_LineEdit.textChanged.connect(self.On_G_lineEdit_textChanged)
+        self.main_window.B_LineEdit.textChanged.connect(self.On_B_lineEdit_textChanged)
+        self.main_window.A_LineEdit.textChanged.connect(self.On_A_lineEdit_textChanged)
 
-        self.mainWindow.R_Value.textChanged.connect(self.On_R_value_textChanged)
-        self.mainWindow.G_Value.textChanged.connect(self.On_G_value_textChanged)
-        self.mainWindow.B_Value.textChanged.connect(self.On_B_value_textChanged)
-        self.mainWindow.A_Value.textChanged.connect(self.On_A_value_textChanged)
+        self.main_window.R_Scrollbar.valueChanged.connect(self.On_R_scrollbar_valueChanged)
+        self.main_window.G_Scrollbar.valueChanged.connect(self.On_G_scrollbar_valueChanged)
+        self.main_window.B_Scrollbar.valueChanged.connect(self.On_B_scrollbar_valueChanged)
+        self.main_window.A_Scrollbar.valueChanged.connect(self.On_A_scrollbar_valueChanged)
 
         self.color = [255,255,255,255]
         self.color_preview_background = Image.open('res/Transparent_Lable.png').convert('RGBA')
@@ -973,111 +975,104 @@ class Color_Lable(QMainWindow):
         color_preview_background = self.color_lable.color_preview_background.resize((120,120))
         color_preview_background.alpha_composite(color_preview_image)
         
-        self.mainWindow.Color_Preview_Lable.setPixmap(ImageQt.toqpixmap(color_preview_background))
+        self.main_window.Color_Preview_Lable.setPixmap(ImageQt.toqpixmap(color_preview_background))
 
-    def On_R_scrollbar_valueChanged(self):
-        self.mainWindow.R_Value.setText(str(self.mainWindow.R_Scrollbar.value()))
-        pass
-
-    def On_G_scrollbar_valueChanged(self):
-        self.mainWindow.G_Value.setText(str(self.mainWindow.G_Scrollbar.value()))
-        pass
-
-    def On_B_scrollbar_valueChanged(self):
-        self.mainWindow.B_Value.setText(str(self.mainWindow.B_Scrollbar.value()))
-        pass
-
-    def On_A_scrollbar_valueChanged(self):
-        self.mainWindow.A_Value.setText(str(self.mainWindow.A_Scrollbar.value()))
-        pass
-
-    def On_R_value_textChanged(self):
-        text = self.mainWindow.R_Value.text()
+    def On_R_lineEdit_textChanged(self):
+        text = self.main_window.R_LineEdit.text()
 
         if len(text) == 0:
             text = '0'
-            self.mainWindow.R_Value.setText(text)
+            self.main_window.R_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
                 text = '0'
 
-        self.mainWindow.R_Scrollbar.setValue(eval(text))
+        self.main_window.R_Scrollbar.setValue(eval(text))
         self.color_lable.color[0] = eval(text)
 
         self.color_lable.Draw_color_preview_lable()
 
-    def On_G_value_textChanged(self):
-        text = self.mainWindow.G_Value.text()
+    def On_G_lineEdit_textChanged(self):
+        text = self.main_window.G_LineEdit.text()
 
         if len(text) == 0:
             text = '0'
-            self.mainWindow.G_Value.setText(text)
+            self.main_window.G_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
                 text = '0'
 
-        self.mainWindow.G_Scrollbar.setValue(eval(text))
+        self.main_window.G_Scrollbar.setValue(eval(text))
         self.color_lable.color[1] = eval(text)
 
         self.color_lable.Draw_color_preview_lable()
 
-    def On_B_value_textChanged(self):
-        text = self.mainWindow.B_Value.text()
+    def On_B_lineEdit_textChanged(self):
+        text = self.main_window.B_LineEdit.text()
 
         if len(text) == 0:
             text = '0'
-            self.mainWindow.B_Value.setText(text)
+            self.main_window.B_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
                 text = '0'
 
-        self.mainWindow.B_Scrollbar.setValue(eval(text))
+        self.main_window.B_Scrollbar.setValue(eval(text))
         self.color_lable.color[2] = eval(text)
 
         self.color_lable.Draw_color_preview_lable()
 
-    def On_A_value_textChanged(self):
-        text = self.mainWindow.A_Value.text()
+    def On_A_lineEdit_textChanged(self):
+        text = self.main_window.A_LineEdit.text()
 
         if len(text) == 0:
             text = '0'
-            self.mainWindow.A_Value.setText(text)
+            self.main_window.A_LineEdit.setText(text)
         elif text[0] == '0' and len(text) > 1:
             for i in range(len(text)):
                 if text[0] == '0':
                    text = text.replace('0','',1)
-                else:
-                    break
 
             if len(text) == 0:
                 text = '0'
 
-        self.mainWindow.A_Scrollbar.setValue(eval(text))
+        self.main_window.A_Scrollbar.setValue(eval(text))
         self.color_lable.color[3] = eval(text)
 
         self.color_lable.Draw_color_preview_lable()
 
+    def On_R_scrollbar_valueChanged(self):
+        self.main_window.R_LineEdit.setText(str(self.main_window.R_Scrollbar.value()))
+        pass
+
+    def On_G_scrollbar_valueChanged(self):
+        self.main_window.G_LineEdit.setText(str(self.main_window.G_Scrollbar.value()))
+        pass
+
+    def On_B_scrollbar_valueChanged(self):
+        self.main_window.B_LineEdit.setText(str(self.main_window.B_Scrollbar.value()))
+        pass
+
+    def On_A_scrollbar_valueChanged(self):
+        self.main_window.A_LineEdit.setText(str(self.main_window.A_Scrollbar.value()))
+        pass
+
+
 class Image_Lable:
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
 
         self.zoom = 1
         self.scrollbar_offset = [0,0]
@@ -1087,76 +1082,76 @@ class Image_Lable:
         self.image_lable_background_B = Image.open('res/TransparentBg-B.png').convert('RGBA')
         self.image_lable_background = self.image_lable_background_W
 
-        self.mainWindow.Image_H_Scrollbar.valueChanged.connect(self.On_image_H_scrollbar_valueChanged)
-        self.mainWindow.Image_V_Scrollbar.valueChanged.connect(self.On_image_V_scrollbar_valueChanged)
+        self.main_window.Image_H_Scrollbar.valueChanged.connect(self.On_image_H_scrollbar_valueChanged)
+        self.main_window.Image_V_Scrollbar.valueChanged.connect(self.On_image_V_scrollbar_valueChanged)
 
     def Draw_image_lable(self):
         drwan_image_rect = [0,0,0,0]
         drwan_image_rect[0] = self.image_lable.scrollbar_offset[0]\
-                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.mainWindow.Image_Lable.width()\
+                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.main_window.Image_Lable.width()\
                               else 0
         drwan_image_rect[1] = self.image_lable.scrollbar_offset[1]\
-                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.mainWindow.Image_Lable.height() \
+                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.main_window.Image_Lable.height() \
                               else 0
-        drwan_image_rect[2] = self.image_lable.scrollbar_offset[0] + self.mainWindow.Image_Lable.width()\
-                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.mainWindow.Image_Lable.width()\
+        drwan_image_rect[2] = self.image_lable.scrollbar_offset[0] + self.main_window.Image_Lable.width()\
+                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.main_window.Image_Lable.width()\
                               else self.image_lable.current_image_image.size[0] * self.image_lable.zoom
-        drwan_image_rect[3] = self.image_lable.scrollbar_offset[1] + self.mainWindow.Image_Lable.height()\
-                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.mainWindow.Image_Lable.height() \
+        drwan_image_rect[3] = self.image_lable.scrollbar_offset[1] + self.main_window.Image_Lable.height()\
+                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.main_window.Image_Lable.height() \
                               else self.image_lable.current_image_image.size[1] * self.image_lable.zoom
         
         drwan_lable_rect = [0,0,0,0]
         drwan_lable_rect[0] = 0\
-                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.mainWindow.Image_Lable.width()\
-                              else (self.mainWindow.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2
+                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.main_window.Image_Lable.width()\
+                              else (self.main_window.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2
         drwan_lable_rect[1] = 0\
-                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.mainWindow.Image_Lable.height() \
-                              else (self.mainWindow.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2
-        drwan_lable_rect[2] = self.mainWindow.Image_Lable.width()\
-                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.mainWindow.Image_Lable.width()\
+                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.main_window.Image_Lable.height() \
+                              else (self.main_window.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2
+        drwan_lable_rect[2] = self.main_window.Image_Lable.width()\
+                              if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.main_window.Image_Lable.width()\
                               else drwan_lable_rect[0] + self.image_lable.current_image_image.size[0] * self.image_lable.zoom
-        drwan_lable_rect[3] = self.mainWindow.Image_Lable.height()\
-                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.mainWindow.Image_Lable.height() \
+        drwan_lable_rect[3] = self.main_window.Image_Lable.height()\
+                              if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.main_window.Image_Lable.height() \
                               else drwan_lable_rect[1] + self.image_lable.current_image_image.size[1] * self.image_lable.zoom
         
         temp_image = self.image_lable.current_image_image.resize((drwan_image_rect[2] - drwan_image_rect[0],drwan_image_rect[3] - drwan_image_rect[1]),\
                      Image.NEAREST,\
                     (drwan_image_rect[0] // self.image_lable.zoom, drwan_image_rect[1] // self.image_lable.zoom, drwan_image_rect[2] // self.image_lable.zoom, drwan_image_rect[3] // self.image_lable.zoom))
-        drawn_image_image = self.image_lable.image_lable_background.resize((self.mainWindow.Image_Lable.width(),self.mainWindow.Image_Lable.height()))
+        drawn_image_image = self.image_lable.image_lable_background.resize((self.main_window.Image_Lable.width(),self.main_window.Image_Lable.height()))
         drawn_image_image.alpha_composite(temp_image,((drwan_lable_rect[0],drwan_lable_rect[1])))
-        self.mainWindow.Image_Lable.setPixmap(ImageQt.toqpixmap(drawn_image_image))
+        self.main_window.Image_Lable.setPixmap(ImageQt.toqpixmap(drawn_image_image))
 
     def Set_scrollbar_display(self):
-        if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.mainWindow.Image_Lable.width():
-            self.mainWindow.Image_H_Scrollbar.setEnabled(True)
-            self.mainWindow.Image_H_Scrollbar.setRange(0,self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.mainWindow.Image_Lable.width())
-            self.mainWindow.Image_H_Scrollbar.setPageStep((self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.mainWindow.Image_Lable.width()) // 10)
+        if self.image_lable.current_image_image.size[0] * self.image_lable.zoom > self.main_window.Image_Lable.width():
+            self.main_window.Image_H_Scrollbar.setEnabled(True)
+            self.main_window.Image_H_Scrollbar.setRange(0,self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width())
+            self.main_window.Image_H_Scrollbar.setPageStep((self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width()) // 10)
         else:
-            self.mainWindow.Image_H_Scrollbar.setDisabled(True)
+            self.main_window.Image_H_Scrollbar.setDisabled(True)
 
-        if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.mainWindow.Image_Lable.height():
-            self.mainWindow.Image_V_Scrollbar.setEnabled(True)
-            self.mainWindow.Image_V_Scrollbar.setRange(0,self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.mainWindow.Image_Lable.height())
-            self.mainWindow.Image_V_Scrollbar.setPageStep((self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.mainWindow.Image_Lable.height()) // 10)
+        if self.image_lable.current_image_image.size[1] * self.image_lable.zoom > self.main_window.Image_Lable.height():
+            self.main_window.Image_V_Scrollbar.setEnabled(True)
+            self.main_window.Image_V_Scrollbar.setRange(0,self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height())
+            self.main_window.Image_V_Scrollbar.setPageStep((self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height()) // 10)
         else:
-            self.mainWindow.Image_V_Scrollbar.setDisabled(True)
+            self.main_window.Image_V_Scrollbar.setDisabled(True)
 
     def Set_scrollbar_value(self,x,y):
         self.image_lable.scrollbar_offset = [x,y]
 
-        self.mainWindow.Image_H_Scrollbar.blockSignals(True)
-        self.mainWindow.Image_V_Scrollbar.blockSignals(True)
-        self.mainWindow.Image_H_Scrollbar.setValue(x)
-        self.mainWindow.Image_V_Scrollbar.setValue(y)
-        self.mainWindow.Image_H_Scrollbar.blockSignals(False)
-        self.mainWindow.Image_V_Scrollbar.blockSignals(False)
+        self.main_window.Image_H_Scrollbar.blockSignals(True)
+        self.main_window.Image_V_Scrollbar.blockSignals(True)
+        self.main_window.Image_H_Scrollbar.setValue(x)
+        self.main_window.Image_V_Scrollbar.setValue(y)
+        self.main_window.Image_H_Scrollbar.blockSignals(False)
+        self.main_window.Image_V_Scrollbar.blockSignals(False)
 
     def On_image_H_scrollbar_valueChanged(self):
-        self.image_lable.scrollbar_offset[0] = self.mainWindow.Image_H_Scrollbar.value()
+        self.image_lable.scrollbar_offset[0] = self.main_window.Image_H_Scrollbar.value()
         self.image_lable.Draw_image_lable()
 
     def On_image_V_scrollbar_valueChanged(self):
-        self.image_lable.scrollbar_offset[1] = self.mainWindow.Image_V_Scrollbar.value()
+        self.image_lable.scrollbar_offset[1] = self.main_window.Image_V_Scrollbar.value()
         self.image_lable.Draw_image_lable()
 
     def wheelEvent(self,event):
@@ -1165,26 +1160,26 @@ class Image_Lable:
                 if self.image_lable.zoom < ZOOM_LIMITE:
                     self.image_lable.zoom += 1
 
-                    self.mainWindow.Image_H_Scrollbar.blockSignals(True)
-                    self.mainWindow.Image_V_Scrollbar.blockSignals(True)
+                    self.main_window.Image_H_Scrollbar.blockSignals(True)
+                    self.main_window.Image_V_Scrollbar.blockSignals(True)
                     self.image_lable.Set_scrollbar_display()
 
-                    if self.mainWindow.Image_H_Scrollbar.isEnabled():
-                        self.mainWindow.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0] + (self.image_lable.scrollbar_offset[0] + self.mainWindow.Image_Lable.width() // 2) // (self.image_lable.zoom - 1))
-                        self.image_lable.scrollbar_offset[0] = self.mainWindow.Image_H_Scrollbar.value()
+                    if self.main_window.Image_H_Scrollbar.isEnabled():
+                        self.main_window.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0] + (self.image_lable.scrollbar_offset[0] + self.main_window.Image_Lable.width() // 2) // (self.image_lable.zoom - 1))
+                        self.image_lable.scrollbar_offset[0] = self.main_window.Image_H_Scrollbar.value()
                     else:
-                        self.mainWindow.Image_H_Scrollbar.setValue(0)
-                        self.image_lable.scrollbar_offset[0] = self.mainWindow.Image_H_Scrollbar.value()
+                        self.main_window.Image_H_Scrollbar.setValue(0)
+                        self.image_lable.scrollbar_offset[0] = self.main_window.Image_H_Scrollbar.value()
 
-                    if self.mainWindow.Image_V_Scrollbar.isEnabled():
-                        self.mainWindow.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1] + (self.image_lable.scrollbar_offset[1] + self.mainWindow.Image_Lable.height() // 2) // (self.image_lable.zoom - 1))
-                        self.image_lable.scrollbar_offset[1] = self.mainWindow.Image_V_Scrollbar.value()
+                    if self.main_window.Image_V_Scrollbar.isEnabled():
+                        self.main_window.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1] + (self.image_lable.scrollbar_offset[1] + self.main_window.Image_Lable.height() // 2) // (self.image_lable.zoom - 1))
+                        self.image_lable.scrollbar_offset[1] = self.main_window.Image_V_Scrollbar.value()
                     else:
-                        self.mainWindow.Image_V_Scrollbar.setValue(0)
-                        self.image_lable.scrollbar_offset[1] = self.mainWindow.Image_V_Scrollbar.value()
+                        self.main_window.Image_V_Scrollbar.setValue(0)
+                        self.image_lable.scrollbar_offset[1] = self.main_window.Image_V_Scrollbar.value()
 
-                    self.mainWindow.Image_H_Scrollbar.blockSignals(False)
-                    self.mainWindow.Image_V_Scrollbar.blockSignals(False)
+                    self.main_window.Image_H_Scrollbar.blockSignals(False)
+                    self.main_window.Image_V_Scrollbar.blockSignals(False)
 
                     self.image_lable.Draw_image_lable()
 
@@ -1192,32 +1187,32 @@ class Image_Lable:
                 if self.image_lable.zoom > 1:
                     self.image_lable.zoom -= 1
 
-                    self.mainWindow.Image_H_Scrollbar.blockSignals(True)
-                    self.mainWindow.Image_V_Scrollbar.blockSignals(True)
+                    self.main_window.Image_H_Scrollbar.blockSignals(True)
+                    self.main_window.Image_V_Scrollbar.blockSignals(True)
                     self.image_lable.Set_scrollbar_display()
 
-                    if self.mainWindow.Image_H_Scrollbar.isEnabled():
-                        if self.image_lable.scrollbar_offset[0] - (self.image_lable.scrollbar_offset[0] + self.mainWindow.Image_Lable.width() // 2) // (self.image_lable.zoom + 1) < self.mainWindow.Image_H_Scrollbar.maximum():
-                            self.mainWindow.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0] - (self.image_lable.scrollbar_offset[0] + self.mainWindow.Image_Lable.width() // 2) // (self.image_lable.zoom + 1))
+                    if self.main_window.Image_H_Scrollbar.isEnabled():
+                        if self.image_lable.scrollbar_offset[0] - (self.image_lable.scrollbar_offset[0] + self.main_window.Image_Lable.width() // 2) // (self.image_lable.zoom + 1) < self.main_window.Image_H_Scrollbar.maximum():
+                            self.main_window.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0] - (self.image_lable.scrollbar_offset[0] + self.main_window.Image_Lable.width() // 2) // (self.image_lable.zoom + 1))
                         else:
-                            self.mainWindow.Image_H_Scrollbar.setValue(self.mainWindow.Image_H_Scrollbar.maximum())
-                        self.image_lable.scrollbar_offset[0] = self.mainWindow.Image_H_Scrollbar.value()
+                            self.main_window.Image_H_Scrollbar.setValue(self.main_window.Image_H_Scrollbar.maximum())
+                        self.image_lable.scrollbar_offset[0] = self.main_window.Image_H_Scrollbar.value()
                     else:
-                        self.mainWindow.Image_H_Scrollbar.setValue(0)
-                        self.image_lable.scrollbar_offset[0] = self.mainWindow.Image_H_Scrollbar.value()
+                        self.main_window.Image_H_Scrollbar.setValue(0)
+                        self.image_lable.scrollbar_offset[0] = self.main_window.Image_H_Scrollbar.value()
 
-                    if self.mainWindow.Image_V_Scrollbar.isEnabled():
-                        if self.image_lable.scrollbar_offset[1] - (self.image_lable.scrollbar_offset[1] + self.mainWindow.Image_Lable.height() // 2) // (self.image_lable.zoom + 1) < self.mainWindow.Image_V_Scrollbar.maximum():
-                            self.mainWindow.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1] - (self.image_lable.scrollbar_offset[1] + self.mainWindow.Image_Lable.height() // 2) // (self.image_lable.zoom + 1))
+                    if self.main_window.Image_V_Scrollbar.isEnabled():
+                        if self.image_lable.scrollbar_offset[1] - (self.image_lable.scrollbar_offset[1] + self.main_window.Image_Lable.height() // 2) // (self.image_lable.zoom + 1) < self.main_window.Image_V_Scrollbar.maximum():
+                            self.main_window.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1] - (self.image_lable.scrollbar_offset[1] + self.main_window.Image_Lable.height() // 2) // (self.image_lable.zoom + 1))
                         else:
-                            self.mainWindow.Image_V_Scrollbar.setValue(self.mainWindow.Image_V_Scrollbar.maximum())
-                        self.image_lable.scrollbar_offset[1] = self.mainWindow.Image_V_Scrollbar.value()
+                            self.main_window.Image_V_Scrollbar.setValue(self.main_window.Image_V_Scrollbar.maximum())
+                        self.image_lable.scrollbar_offset[1] = self.main_window.Image_V_Scrollbar.value()
                     else:
-                        self.mainWindow.Image_V_Scrollbar.setValue(0)
-                        self.image_lable.scrollbar_offset[1] = self.mainWindow.Image_V_Scrollbar.value()
+                        self.main_window.Image_V_Scrollbar.setValue(0)
+                        self.image_lable.scrollbar_offset[1] = self.main_window.Image_V_Scrollbar.value()
 
-                    self.mainWindow.Image_H_Scrollbar.blockSignals(False)
-                    self.mainWindow.Image_V_Scrollbar.blockSignals(False)
+                    self.main_window.Image_H_Scrollbar.blockSignals(False)
+                    self.main_window.Image_V_Scrollbar.blockSignals(False)
 
                     self.image_lable.Draw_image_lable()
 
@@ -1239,18 +1234,19 @@ class Image_Lable:
         else:
             self.image_lable.image_lable_background = self.image_lable_background_B
 
-        self.mainWindow.R_Value.setText(str(255))
-        self.mainWindow.G_Value.setText(str(255))
-        self.mainWindow.B_Value.setText(str(255))
-        self.mainWindow.A_Value.setText(str(255))
+        self.main_window.R_LineEdit.setText(str(255))
+        self.main_window.G_LineEdit.setText(str(255))
+        self.main_window.B_LineEdit.setText(str(255))
+        self.main_window.A_LineEdit.setText(str(255))
 
         self.color_lable.color = color_backup
 
         self.image_lable.Draw_image_lable()
 
+
 class Mouse_And_Key_Events(QWidget):
-    def __init__(self,mainWindow):
-        self.mainWindow = mainWindow
+    def __init__(self,main_window):
+        self.main_window = main_window
         QWidget.__init__(self)
 
         self.draging = False
@@ -1258,19 +1254,19 @@ class Mouse_And_Key_Events(QWidget):
         self.drag_second_point = QPoint()
 
     def mousePressEvent(self,event):
-        if self.mainWindow.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.mainWindow.Image_Lable.geometry().x() + self.mainWindow.Image_Lable.geometry().width()\
-           and self.mainWindow.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.mainWindow.Image_Lable.geometry().y() + self.mainWindow.Image_Lable.geometry().height()\
+        if self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width()\
+           and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
            and self.system_state.image_loaded:
             click_point = [0,0]
-            click_point[0] = (event.pos().x() - self.mainWindow.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
-                             if self.mainWindow.Image_H_Scrollbar.isEnabled()\
-                             else ((event.pos().x() - self.mainWindow.Image_Lable.geometry().x())\
-                                  - (self.mainWindow.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2) \
+            click_point[0] = (event.pos().x() - self.main_window.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
+                             if self.main_window.Image_H_Scrollbar.isEnabled()\
+                             else ((event.pos().x() - self.main_window.Image_Lable.geometry().x())\
+                                  - (self.main_window.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2) \
                                   // self.image_lable.zoom
-            click_point[1] = (event.pos().y() - self.mainWindow.Image_Lable.geometry().y() + self.image_lable.scrollbar_offset[1]) // self.image_lable.zoom\
-                             if self.mainWindow.Image_V_Scrollbar.isEnabled()\
-                             else ((event.pos().y() - self.mainWindow.Image_Lable.geometry().y())\
-                                  - (self.mainWindow.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2) \
+            click_point[1] = (event.pos().y() - self.main_window.Image_Lable.geometry().y() + self.image_lable.scrollbar_offset[1]) // self.image_lable.zoom\
+                             if self.main_window.Image_V_Scrollbar.isEnabled()\
+                             else ((event.pos().y() - self.main_window.Image_Lable.geometry().y())\
+                                  - (self.main_window.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2) \
                                   // self.image_lable.zoom
              
             if event.button() == Qt.LeftButton:
@@ -1278,23 +1274,23 @@ class Mouse_And_Key_Events(QWidget):
                     self.mouse_and_key_events.drag_first_point = event.pos()
                     self.setCursor(Qt.ClosedHandCursor)
 
-                elif self.mainWindow.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
                     self.system_state.System_busy()
                     t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
                     t.start()
 
-                elif self.mainWindow.PickColor_RadioB.isChecked():
+                elif self.main_window.PickColor_RadioB.isChecked():
                     self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
-                elif self.mainWindow.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
                     self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
 
-                elif self.mainWindow.Filling_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Filling_RadioB.isChecked() and not self.system_state.system_busy:
                     self.system_state.System_busy()
                     t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
                     t.start()
 
-            elif event.button() == Qt.RightButton and self.mainWindow.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
+            elif event.button() == Qt.RightButton and self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
                 self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
                 self.system_state.System_busy()
@@ -1302,68 +1298,68 @@ class Mouse_And_Key_Events(QWidget):
                 t.start()
 
     def mouseMoveEvent(self,event):
-        if self.mainWindow.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.mainWindow.Image_Lable.geometry().x() + self.mainWindow.Image_Lable.geometry().width()\
-           and self.mainWindow.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.mainWindow.Image_Lable.geometry().y() + self.mainWindow.Image_Lable.geometry().height()\
+        if self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width()\
+           and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
            and self.system_state.image_loaded:
             click_point = [0,0]
-            click_point[0] = (event.pos().x() - self.mainWindow.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
-                             if self.mainWindow.Image_H_Scrollbar.isEnabled()\
-                             else ((event.pos().x() - self.mainWindow.Image_Lable.geometry().x())\
-                                  - (self.mainWindow.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2) \
+            click_point[0] = (event.pos().x() - self.main_window.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
+                             if self.main_window.Image_H_Scrollbar.isEnabled()\
+                             else ((event.pos().x() - self.main_window.Image_Lable.geometry().x())\
+                                  - (self.main_window.Image_Lable.width() - self.image_lable.current_image_image.size[0] * self.image_lable.zoom) // 2) \
                                   // self.image_lable.zoom
-            click_point[1] = (event.pos().y() - self.mainWindow.Image_Lable.geometry().y() + self.image_lable.scrollbar_offset[1]) // self.image_lable.zoom\
-                             if self.mainWindow.Image_V_Scrollbar.isEnabled()\
-                             else ((event.pos().y() - self.mainWindow.Image_Lable.geometry().y())\
-                                  - (self.mainWindow.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2) \
+            click_point[1] = (event.pos().y() - self.main_window.Image_Lable.geometry().y() + self.image_lable.scrollbar_offset[1]) // self.image_lable.zoom\
+                             if self.main_window.Image_V_Scrollbar.isEnabled()\
+                             else ((event.pos().y() - self.main_window.Image_Lable.geometry().y())\
+                                  - (self.main_window.Image_Lable.height() - self.image_lable.current_image_image.size[1] * self.image_lable.zoom) // 2) \
                                   // self.image_lable.zoom
             
             if event.buttons() == Qt.LeftButton:
                 if self.mouse_and_key_events.draging:
                     self.mouse_and_key_events.drag_second_point = event.pos()
 
-                    if self.mainWindow.Image_H_Scrollbar.isEnabled():
+                    if self.main_window.Image_H_Scrollbar.isEnabled():
                         self.image_lable.scrollbar_offset[0] += self.mouse_and_key_events.drag_first_point.x() - self.mouse_and_key_events.drag_second_point.x()
                         if self.image_lable.scrollbar_offset[0] < 0:
                             self.image_lable.scrollbar_offset[0] = 0
-                        if self.image_lable.scrollbar_offset[0] > self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.mainWindow.Image_Lable.width():
-                            self.image_lable.scrollbar_offset[0] = self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.mainWindow.Image_Lable.width()
+                        if self.image_lable.scrollbar_offset[0] > self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width():
+                            self.image_lable.scrollbar_offset[0] = self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width()
 
-                        self.mainWindow.Image_H_Scrollbar.blockSignals(True)
-                        self.mainWindow.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0])
-                        self.mainWindow.Image_H_Scrollbar.blockSignals(False)
+                        self.main_window.Image_H_Scrollbar.blockSignals(True)
+                        self.main_window.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0])
+                        self.main_window.Image_H_Scrollbar.blockSignals(False)
 
-                    if self.mainWindow.Image_V_Scrollbar.isEnabled():       
+                    if self.main_window.Image_V_Scrollbar.isEnabled():       
                         self.image_lable.scrollbar_offset[1] += self.mouse_and_key_events.drag_first_point.y() - self.mouse_and_key_events.drag_second_point.y()
                         if self.image_lable.scrollbar_offset[1] < 0:
                             self.image_lable.scrollbar_offset[1] = 0
-                        if self.image_lable.scrollbar_offset[1] > self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.mainWindow.Image_Lable.height():
-                            self.image_lable.scrollbar_offset[1] = self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.mainWindow.Image_Lable.height()
+                        if self.image_lable.scrollbar_offset[1] > self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height():
+                            self.image_lable.scrollbar_offset[1] = self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height()
 
-                        self.mainWindow.Image_V_Scrollbar.blockSignals(True)
-                        self.mainWindow.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1])
-                        self.mainWindow.Image_V_Scrollbar.blockSignals(False)
+                        self.main_window.Image_V_Scrollbar.blockSignals(True)
+                        self.main_window.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1])
+                        self.main_window.Image_V_Scrollbar.blockSignals(False)
                                             
                     self.image_lable.Draw_image_lable()
 
                     self.mouse_and_key_events.drag_first_point = self.mouse_and_key_events.drag_second_point
 
-                elif self.mainWindow.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
                     self.system_state.System_busy()
                     t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
                     t.start()
 
-                elif self.mainWindow.PickColor_RadioB.isChecked():
+                elif self.main_window.PickColor_RadioB.isChecked():
                     self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
-                elif self.mainWindow.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
                     self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
 
-                elif self.mainWindow.Filling_RadioB.isChecked() and not self.system_state.system_busy:
+                elif self.main_window.Filling_RadioB.isChecked() and not self.system_state.system_busy:
                     self.system_state.System_busy()
                     t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
                     t.start()
 
-            elif event.buttons() == Qt.RightButton and self.mainWindow.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
+            elif event.buttons() == Qt.RightButton and self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
                 self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
                 self.system_state.System_busy()
@@ -1373,9 +1369,9 @@ class Mouse_And_Key_Events(QWidget):
     def mouseReleaseEvent(self,event):
         self.setCursor(Qt.ArrowCursor)
 
-        if self.mainWindow.Coloring_RadioB.isChecked() and self.system_state.image_loaded and not self.system_state.system_busy \
-        and self.mainWindow.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.mainWindow.Image_Lable.geometry().x() + self.mainWindow.Image_Lable.geometry().width() \
-        and self.mainWindow.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.mainWindow.Image_Lable.geometry().y() + self.mainWindow.Image_Lable.geometry().height():
+        if self.main_window.Coloring_RadioB.isChecked() and self.system_state.image_loaded and not self.system_state.system_busy \
+        and self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width() \
+        and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height():
             self.backup_mod.Insert_backup()
 
     def keyPressEvent(self, event):
@@ -1386,7 +1382,8 @@ class Mouse_And_Key_Events(QWidget):
         if event.key() == Qt.Key_Space:
             self.mouse_and_key_events.draging = False
 
-class MainWindow(QMainWindow,Ui_MainWindow):
+
+class MainW_indow(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
 
@@ -1405,15 +1402,15 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
         self.setupUi(self)
 
-        self.mainWindow = self
+        self.main_window = self
 
-        self.functional_arithmetic = Functional_Arithmetic(self.mainWindow)
-        self.backup_mod = Backup_Mod(self.mainWindow)
-        self.system_state = System_State(self.mainWindow)
-        self.all_bottons = All_Bottons(self.mainWindow)
-        self.color_lable = Color_Lable(self.mainWindow)
-        self.image_lable = Image_Lable(self.mainWindow)
-        self.mouse_and_key_events = Mouse_And_Key_Events(self.mainWindow)
+        self.functional_arithmetic = Functional_Arithmetic(self.main_window)
+        self.backup_mod = Backup_Mod(self.main_window)
+        self.system_state = System_State(self.main_window)
+        self.all_bottons = All_Bottons(self.main_window)
+        self.color_lable = Color_Lable(self.main_window)
+        self.image_lable = Image_Lable(self.main_window)
+        self.mouse_and_key_events = Mouse_And_Key_Events(self.main_window)
 
         self.Set_functional_arithmetic()
         self.Set_backup_mod()
@@ -1500,7 +1497,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         self.mouse_and_key_events.backup_mod = self.backup_mod
 
     def Set_QLable_file_dragable(self):
-        self.Image_Lable.mainWindow = self.mainWindow
+        self.Image_Lable.main_window = self.main_window
 
         self.Image_Lable.functional_arithmetic = self.functional_arithmetic
         self.Image_Lable.color_lable = self.color_lable
@@ -1514,6 +1511,6 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QApplication(SYS_argv)
-    mainWindow = MainWindow()
-    mainWindow.show()
+    main_window = MainW_indow()
+    main_window.show()
     SYS_exit(app.exec_())

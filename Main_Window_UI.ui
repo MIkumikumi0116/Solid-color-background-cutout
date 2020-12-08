@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Main_Window_UI</class>
+ <widget class="QMainWindow" name="Main_Window_UI">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -133,6 +133,12 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
      </spacer>
     </item>
     <item>
@@ -202,6 +208,12 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
      </spacer>
     </item>
     <item>
@@ -224,6 +236,12 @@
          <spacer name="horizontalSpacer_12">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
@@ -277,7 +295,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="R_Value">
+             <widget class="QLineEdit" name="R_LineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>1</horstretch>
@@ -334,7 +352,7 @@ border: 1px solid rgb(28 , 28 , 28);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="G_Value">
+             <widget class="QLineEdit" name="G_LineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>1</horstretch>
@@ -391,7 +409,7 @@ border: 1px solid rgb(28 , 28 , 28);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="B_Value">
+             <widget class="QLineEdit" name="B_LineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>1</horstretch>
@@ -448,7 +466,7 @@ border: 1px solid rgb(28 , 28 , 28);</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="A_Value">
+             <widget class="QLineEdit" name="A_LineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>1</horstretch>
@@ -479,6 +497,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          <spacer name="horizontalSpacer_13">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
@@ -530,6 +554,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </spacer>
         </item>
         <item>
@@ -580,6 +610,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </spacer>
         </item>
        </layout>
@@ -603,6 +639,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          <spacer name="horizontalSpacer_8">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
@@ -630,7 +672,7 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="T_Value">
+         <widget class="QLineEdit" name="T_LineEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -658,6 +700,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </spacer>
         </item>
        </layout>
@@ -681,6 +729,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          <spacer name="horizontalSpacer_9">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
@@ -714,7 +768,7 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="S_Value">
+         <widget class="QLineEdit" name="S_LineEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -742,6 +796,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </spacer>
         </item>
        </layout>
@@ -765,6 +825,12 @@ border: 1px solid rgb(28 , 28 , 28);</string>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
@@ -1209,6 +1275,12 @@ border: 1px solid rgb(28 , 28 , 28);
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </spacer>
         </item>
        </layout>
@@ -1219,6 +1291,12 @@ border: 1px solid rgb(28 , 28 , 28);
      <spacer name="horizontalSpacer_5">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
      </spacer>
     </item>

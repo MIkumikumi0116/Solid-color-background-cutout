@@ -609,7 +609,7 @@ class Backup_Mod:
         
     def Insert_backup(self):
         self.main_window.Working_Status_Label.setText('')
-        if not self.backup_mod.backup_pin == len(self.backups) - 1:
+        if self.backup_mod.backup_pin != len(self.backups) - 1:
             for i in range(self.backup_mod.backup_pin + 1,len(self.backups)):
                 self.backups.pop()
             self.backups.append(self.image_lable.current_image_image.copy())
@@ -643,7 +643,7 @@ class Backup_Mod:
 
     def Redo_backup(self):
         if self.system_state.image_loaded:
-            if not self.backup_mod.backup_pin == len(self.backups) - 1:
+            if self.backup_mod.backup_pin != len(self.backups) - 1:
                 self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin + 1].copy()
                 self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)

@@ -85,7 +85,7 @@ class Functional_Arithmetic:
                         self.system_state.System_free()
                         return
                     else:
-                        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+                        self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
                         self.image_lable.Draw_image_lable()
                     count = 1
                     
@@ -117,7 +117,7 @@ class Functional_Arithmetic:
                     self.image_lable.current_image_array[y - 1,x] = transparent
                     count = count + 1 if count < DRAW_INTERAL else 0
 
-            self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+            self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
             self.image_lable.Draw_image_lable()
 
         if mode == 0:
@@ -168,7 +168,7 @@ class Functional_Arithmetic:
         for point in coloring_area:
             self.image_lable.current_image_array[point[1],point[0]] = np.array(self.color_lable.color)
 
-        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+        self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
 
     def Filling_image(self,x0,y0):
@@ -194,7 +194,7 @@ class Functional_Arithmetic:
                     self.system_state.System_free()
                     return
                 else:
-                    self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+                    self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
                     self.image_lable.Draw_image_lable()
                 count = 1
             
@@ -226,7 +226,7 @@ class Functional_Arithmetic:
                 self.image_lable.current_image_array[y - 1,x] = color
                 count = count + 1 if count < DRAW_INTERAL else 0
  
-        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+        self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
         self.backup_mod.Insert_backup()
         self.system_state.System_free()
@@ -293,7 +293,7 @@ class Functional_Arithmetic:
             return
 
         self.image_lable.current_image_image = self.image_lable.current_image_image.crop((left,upper,right + 1,lower + 1))
-        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
 
         self.image_lable.Set_scrollbar_value(0,0)
         self.image_lable.Draw_image_lable()
@@ -344,7 +344,7 @@ class Functional_Arithmetic:
                     self.system_state.System_free()
                     return
                 else:
-                    self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+                    self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
                     self.image_lable.Draw_image_lable()
                 count = 1
 
@@ -420,7 +420,7 @@ class Functional_Arithmetic:
 
             count = count + 1 if count < DRAW_INTERAL_CLEAN else 0
 
-        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+        self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
         
         if mode == 0:
@@ -463,7 +463,7 @@ class Functional_Arithmetic:
             for x in range(self.image_lable.current_image_image.size[0]):
                 self.image_lable.current_image_array[y,x] = np.array([255, 255, 255, 255]) if self.image_lable.current_image_array[y,x][3] == 0 else np.array([0, 0, 0, 255])
 
-        self.image_lable.current_image_image = Image.fromarray(self.image_lable.current_image_array)
+        self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
 
         self.backup_mod.Insert_backup()
@@ -556,7 +556,7 @@ class Functional_Arithmetic:
             return
 
         self.image_lable.current_image_image = self.system_state.images[self.system_state.image_index].convert('RGBA')
-        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
         
         self.image_lable.zoom = 1
         self.system_state.image_loaded = True
@@ -584,7 +584,7 @@ class Functional_Arithmetic:
             self.system_state.file_names.append(path[(len(path) - path[::-1].find('/')):])
             
         self.image_lable.current_image_image = self.system_state.images[self.system_state.image_index].convert('RGBA')
-        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+        self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
         
         self.image_lable.zoom = 1
         self.system_state.image_loaded = True
@@ -628,13 +628,13 @@ class Backup_Mod:
             if self.system_state.tomede:
                 self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin].copy()
-                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
                 self.image_lable.Draw_image_lable()
 
             elif self.backup_mod.backup_pin > 0:
                 self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin - 1].copy()
-                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
                 self.backup_mod.backup_pin -= 1
                 self.image_lable.Draw_image_lable()
 
@@ -646,7 +646,7 @@ class Backup_Mod:
             if self.backup_mod.backup_pin != len(self.backups) - 1:
                 self.main_window.Working_Status_Label.setText('')
                 self.image_lable.current_image_image = self.backups[self.backup_mod.backup_pin + 1].copy()
-                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+                self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
                 self.backup_mod.backup_pin += 1
                 self.image_lable.Draw_image_lable()
 
@@ -861,7 +861,7 @@ class All_Bottons(QMainWindow):
 
             self.system_state.image_index -= 1
             self.image_lable.current_image_image = self.system_state.images[self.system_state.image_index].copy().convert('RGBA')
-            self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+            self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
 
             self.backup_mod.backups = [self.image_lable.current_image_image.copy()]
             self.backup_mod.backup_pin = 0
@@ -885,7 +885,7 @@ class All_Bottons(QMainWindow):
 
             self.system_state.image_index += 1
             self.image_lable.current_image_image = self.system_state.images[self.system_state.image_index].copy().convert('RGBA')
-            self.image_lable.current_image_array = np.array(self.image_lable.current_image_image)
+            self.image_lable.current_image_array = np.array(self.image_lable.current_image_image,dtype = 'int')
 
             self.backup_mod.backups = [self.image_lable.current_image_image.copy()]
             self.backup_mod.backup_pin = 0
@@ -1077,7 +1077,7 @@ class Image_Lable:
         self.zoom = 1
         self.scrollbar_offset = [0,0]
         self.current_image_image = Image.new('RGBA',(100,100))
-        self.current_image_array = np.array(self.current_image_image)
+        self.current_image_array = np.array(self.current_image_image,dtype = 'int')
         self.image_lable_background_W = Image.open('res/TransparentBg-W.png').convert('RGBA')
         self.image_lable_background_B = Image.open('res/TransparentBg-B.png').convert('RGBA')
         self.image_lable_background = self.image_lable_background_W

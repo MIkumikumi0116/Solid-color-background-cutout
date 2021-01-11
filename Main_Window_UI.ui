@@ -840,12 +840,15 @@ border: 1px solid rgb(28 , 28 , 28);</string>
            <number>25</number>
           </property>
           <item>
-           <widget class="QPushButton" name="Redo_Button">
+           <widget class="QPushButton" name="WorkDir_Button">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -870,10 +873,7 @@ border: 1px solid rgb(28 , 28 , 28);
 }</string>
             </property>
             <property name="text">
-             <string>重做</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+Y</string>
+             <string>选择目录</string>
             </property>
            </widget>
           </item>
@@ -884,6 +884,9 @@ border: 1px solid rgb(28 , 28 , 28);
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -916,12 +919,56 @@ border: 1px solid rgb(28 , 28 , 28);
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="Redo_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color:white;
+background-color:rgb(65 , 65 , 65);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:hover{
+color:white;
+background-color:rgb(75 , 75 , 75);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:pressed{
+color:white;
+background-color:rgb(85 , 85 , 85);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:disabled{
+color:white;
+background-color:rgb(95 , 95 , 95);
+border: 1px solid rgb(28 , 28 , 28);
+}</string>
+            </property>
+            <property name="text">
+             <string>重做</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+Y</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="Crop_Button">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -951,187 +998,15 @@ border: 1px solid rgb(28 , 28 , 28);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Binarization_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color:white;
-background-color:rgb(65 , 65 , 65);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:hover{
-color:white;
-background-color:rgb(75 , 75 , 75);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(85 , 85 , 85);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:disabled{
-color:white;
-background-color:rgb(95 , 95 , 95);
-border: 1px solid rgb(28 , 28 , 28);
-}</string>
-            </property>
-            <property name="text">
-             <string>二值化</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="WorkDir_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color:white;
-background-color:rgb(65 , 65 , 65);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:hover{
-color:white;
-background-color:rgb(75 , 75 , 75);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(85 , 85 , 85);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:disabled{
-color:white;
-background-color:rgb(95 , 95 , 95);
-border: 1px solid rgb(28 , 28 , 28);
-}</string>
-            </property>
-            <property name="text">
-             <string>选择目录</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Semi_Automatic_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color:white;
-background-color:rgb(65 , 65 , 65);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:hover{
-color:white;
-background-color:rgb(75 , 75 , 75);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(85 , 85 , 85);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:disabled{
-color:white;
-background-color:rgb(95 , 95 , 95);
-border: 1px solid rgb(28 , 28 , 28);
-}</string>
-            </property>
-            <property name="text">
-             <string>半自动</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Previous_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color:white;
-background-color:rgb(65 , 65 , 65);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:hover{
-color:white;
-background-color:rgb(75 , 75 , 75);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(85 , 85 , 85);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:disabled{
-color:white;
-background-color:rgb(95 , 95 , 95);
-border: 1px solid rgb(28 , 28 , 28);
-}</string>
-            </property>
-            <property name="text">
-             <string>上一张</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Change_Background_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color:white;
-background-color:rgb(65 , 65 , 65);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:hover{
-color:white;
-background-color:rgb(75 , 75 , 75);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:pressed{
-color:white;
-background-color:rgb(85 , 85 , 85);
-border: 1px solid rgb(28 , 28 , 28);
-}
-QPushButton:disabled{
-color:white;
-background-color:rgb(95 , 95 , 95);
-border: 1px solid rgb(28 , 28 , 28);
-}</string>
-            </property>
-            <property name="text">
-             <string>更换背景</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="Clean_Button">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -1161,12 +1036,53 @@ border: 1px solid rgb(28 , 28 , 28);
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="Binarization_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color:white;
+background-color:rgb(65 , 65 , 65);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:hover{
+color:white;
+background-color:rgb(75 , 75 , 75);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:pressed{
+color:white;
+background-color:rgb(85 , 85 , 85);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:disabled{
+color:white;
+background-color:rgb(95 , 95 , 95);
+border: 1px solid rgb(28 , 28 , 28);
+}</string>
+            </property>
+            <property name="text">
+             <string>二值化</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="Full_Automatic_Button">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -1196,12 +1112,129 @@ border: 1px solid rgb(28 , 28 , 28);
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="Semi_Automatic_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color:white;
+background-color:rgb(65 , 65 , 65);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:hover{
+color:white;
+background-color:rgb(75 , 75 , 75);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:pressed{
+color:white;
+background-color:rgb(85 , 85 , 85);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:disabled{
+color:white;
+background-color:rgb(95 , 95 , 95);
+border: 1px solid rgb(28 , 28 , 28);
+}</string>
+            </property>
+            <property name="text">
+             <string>半自动</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Change_Background_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color:white;
+background-color:rgb(65 , 65 , 65);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:hover{
+color:white;
+background-color:rgb(75 , 75 , 75);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:pressed{
+color:white;
+background-color:rgb(85 , 85 , 85);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:disabled{
+color:white;
+background-color:rgb(95 , 95 , 95);
+border: 1px solid rgb(28 , 28 , 28);
+}</string>
+            </property>
+            <property name="text">
+             <string>更换背景</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Previous_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color:white;
+background-color:rgb(65 , 65 , 65);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:hover{
+color:white;
+background-color:rgb(75 , 75 , 75);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:pressed{
+color:white;
+background-color:rgb(85 , 85 , 85);
+border: 1px solid rgb(28 , 28 , 28);
+}
+QPushButton:disabled{
+color:white;
+background-color:rgb(95 , 95 , 95);
+border: 1px solid rgb(28 , 28 , 28);
+}</string>
+            </property>
+            <property name="text">
+             <string>上一张</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="Next_Button">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -1237,6 +1270,9 @@ border: 1px solid rgb(28 , 28 , 28);
               <width>0</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{

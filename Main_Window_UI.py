@@ -356,104 +356,9 @@ class Ui_Main_Window_UI(object):
         self.Botton_Layout = QtWidgets.QVBoxLayout()
         self.Botton_Layout.setSpacing(25)
         self.Botton_Layout.setObjectName("Botton_Layout")
-        self.Redo_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Redo_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Redo_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Redo_Button.setObjectName("Redo_Button")
-        self.Botton_Layout.addWidget(self.Redo_Button)
-        self.Revoke_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Revoke_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Revoke_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Revoke_Button.setObjectName("Revoke_Button")
-        self.Botton_Layout.addWidget(self.Revoke_Button)
-        self.Crop_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Crop_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Crop_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Crop_Button.setObjectName("Crop_Button")
-        self.Botton_Layout.addWidget(self.Crop_Button)
-        self.Binarization_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Binarization_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Binarization_Button.setStyleSheet("QPushButton{\n"
-"color:white;\n"
-"background-color:rgb(65 , 65 , 65);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:hover{\n"
-"color:white;\n"
-"background-color:rgb(75 , 75 , 75);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"color:white;\n"
-"background-color:rgb(85 , 85 , 85);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}\n"
-"QPushButton:disabled{\n"
-"color:white;\n"
-"background-color:rgb(95 , 95 , 95);\n"
-"border: 1px solid rgb(28 , 28 , 28);\n"
-"}")
-        self.Binarization_Button.setObjectName("Binarization_Button")
-        self.Botton_Layout.addWidget(self.Binarization_Button)
         self.WorkDir_Button = QtWidgets.QPushButton(self.Main_Layout)
         self.WorkDir_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.WorkDir_Button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.WorkDir_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -476,9 +381,10 @@ class Ui_Main_Window_UI(object):
 "}")
         self.WorkDir_Button.setObjectName("WorkDir_Button")
         self.Botton_Layout.addWidget(self.WorkDir_Button)
-        self.Semi_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Semi_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Semi_Automatic_Button.setStyleSheet("QPushButton{\n"
+        self.Revoke_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Revoke_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Revoke_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Revoke_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
@@ -498,11 +404,12 @@ class Ui_Main_Window_UI(object):
 "background-color:rgb(95 , 95 , 95);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
 "}")
-        self.Semi_Automatic_Button.setObjectName("Semi_Automatic_Button")
-        self.Botton_Layout.addWidget(self.Semi_Automatic_Button)
-        self.Previous_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Previous_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Previous_Button.setStyleSheet("QPushButton{\n"
+        self.Revoke_Button.setObjectName("Revoke_Button")
+        self.Botton_Layout.addWidget(self.Revoke_Button)
+        self.Redo_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Redo_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Redo_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Redo_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
@@ -522,11 +429,12 @@ class Ui_Main_Window_UI(object):
 "background-color:rgb(95 , 95 , 95);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
 "}")
-        self.Previous_Button.setObjectName("Previous_Button")
-        self.Botton_Layout.addWidget(self.Previous_Button)
-        self.Change_Background_Button = QtWidgets.QPushButton(self.Main_Layout)
-        self.Change_Background_Button.setMinimumSize(QtCore.QSize(0, 28))
-        self.Change_Background_Button.setStyleSheet("QPushButton{\n"
+        self.Redo_Button.setObjectName("Redo_Button")
+        self.Botton_Layout.addWidget(self.Redo_Button)
+        self.Crop_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Crop_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Crop_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Crop_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
@@ -546,10 +454,11 @@ class Ui_Main_Window_UI(object):
 "background-color:rgb(95 , 95 , 95);\n"
 "border: 1px solid rgb(28 , 28 , 28);\n"
 "}")
-        self.Change_Background_Button.setObjectName("Change_Background_Button")
-        self.Botton_Layout.addWidget(self.Change_Background_Button)
+        self.Crop_Button.setObjectName("Crop_Button")
+        self.Botton_Layout.addWidget(self.Crop_Button)
         self.Clean_Button = QtWidgets.QPushButton(self.Main_Layout)
         self.Clean_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Clean_Button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Clean_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -572,8 +481,34 @@ class Ui_Main_Window_UI(object):
 "}")
         self.Clean_Button.setObjectName("Clean_Button")
         self.Botton_Layout.addWidget(self.Clean_Button)
+        self.Binarization_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Binarization_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Binarization_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Binarization_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Binarization_Button.setObjectName("Binarization_Button")
+        self.Botton_Layout.addWidget(self.Binarization_Button)
         self.Full_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
         self.Full_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Full_Automatic_Button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Full_Automatic_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -596,8 +531,84 @@ class Ui_Main_Window_UI(object):
 "}")
         self.Full_Automatic_Button.setObjectName("Full_Automatic_Button")
         self.Botton_Layout.addWidget(self.Full_Automatic_Button)
+        self.Semi_Automatic_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Semi_Automatic_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Semi_Automatic_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Semi_Automatic_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Semi_Automatic_Button.setObjectName("Semi_Automatic_Button")
+        self.Botton_Layout.addWidget(self.Semi_Automatic_Button)
+        self.Change_Background_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Change_Background_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Change_Background_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Change_Background_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Change_Background_Button.setObjectName("Change_Background_Button")
+        self.Botton_Layout.addWidget(self.Change_Background_Button)
+        self.Previous_Button = QtWidgets.QPushButton(self.Main_Layout)
+        self.Previous_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Previous_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.Previous_Button.setStyleSheet("QPushButton{\n"
+"color:white;\n"
+"background-color:rgb(65 , 65 , 65);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:hover{\n"
+"color:white;\n"
+"background-color:rgb(75 , 75 , 75);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"color:white;\n"
+"background-color:rgb(85 , 85 , 85);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"color:white;\n"
+"background-color:rgb(95 , 95 , 95);\n"
+"border: 1px solid rgb(28 , 28 , 28);\n"
+"}")
+        self.Previous_Button.setObjectName("Previous_Button")
+        self.Botton_Layout.addWidget(self.Previous_Button)
         self.Next_Button = QtWidgets.QPushButton(self.Main_Layout)
         self.Next_Button.setMinimumSize(QtCore.QSize(0, 28))
+        self.Next_Button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Next_Button.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -622,6 +633,7 @@ class Ui_Main_Window_UI(object):
         self.Botton_Layout.addWidget(self.Next_Button)
         self.Save_Botton = QtWidgets.QPushButton(self.Main_Layout)
         self.Save_Botton.setMinimumSize(QtCore.QSize(0, 28))
+        self.Save_Botton.setFocusPolicy(QtCore.Qt.NoFocus)
         self.Save_Botton.setStyleSheet("QPushButton{\n"
 "color:white;\n"
 "background-color:rgb(65 , 65 , 65);\n"
@@ -687,18 +699,18 @@ class Ui_Main_Window_UI(object):
         self.T_LineEdit.setText(_translate("Main_Window_UI", "0"))
         self.S_Lable.setText(_translate("Main_Window_UI", "笔刷"))
         self.S_LineEdit.setText(_translate("Main_Window_UI", "1"))
-        self.Redo_Button.setText(_translate("Main_Window_UI", "重做"))
-        self.Redo_Button.setShortcut(_translate("Main_Window_UI", "Ctrl+Y"))
+        self.WorkDir_Button.setText(_translate("Main_Window_UI", "选择目录"))
         self.Revoke_Button.setText(_translate("Main_Window_UI", "撤销"))
         self.Revoke_Button.setShortcut(_translate("Main_Window_UI", "Ctrl+Z"))
+        self.Redo_Button.setText(_translate("Main_Window_UI", "重做"))
+        self.Redo_Button.setShortcut(_translate("Main_Window_UI", "Ctrl+Y"))
         self.Crop_Button.setText(_translate("Main_Window_UI", "裁剪"))
-        self.Binarization_Button.setText(_translate("Main_Window_UI", "二值化"))
-        self.WorkDir_Button.setText(_translate("Main_Window_UI", "选择目录"))
-        self.Semi_Automatic_Button.setText(_translate("Main_Window_UI", "半自动"))
-        self.Previous_Button.setText(_translate("Main_Window_UI", "上一张"))
-        self.Change_Background_Button.setText(_translate("Main_Window_UI", "更换背景"))
         self.Clean_Button.setText(_translate("Main_Window_UI", "清理"))
+        self.Binarization_Button.setText(_translate("Main_Window_UI", "二值化"))
         self.Full_Automatic_Button.setText(_translate("Main_Window_UI", "全自动"))
+        self.Semi_Automatic_Button.setText(_translate("Main_Window_UI", "半自动"))
+        self.Change_Background_Button.setText(_translate("Main_Window_UI", "更换背景"))
+        self.Previous_Button.setText(_translate("Main_Window_UI", "上一张"))
         self.Next_Button.setText(_translate("Main_Window_UI", "下一张"))
         self.Save_Botton.setText(_translate("Main_Window_UI", "保存"))
         self.Save_Botton.setShortcut(_translate("Main_Window_UI", "Ctrl+S"))

@@ -19,10 +19,10 @@ from PyQt5.QtWidgets import QApplication,QMainWindow,QFileDialog,QMessageBox,QWi
 
 
 ZOOM_LIMITE = 80
-CLEAN_LIMITE = 200
-BACKUP_LIMITE = 200
-DRAW_INTERAL = 5000
-DRAW_INTERAL_CLEAN = 20
+CLEAN_LIMITE = 1
+BACKUP_LIMITE = 2000
+DRAW_INTERAL = 3000
+DRAW_INTERAL_CLEAN = 5
 
 
 
@@ -36,7 +36,7 @@ class Functional_Arithmetic:
         #1~4:由半自动唤起
         #5~8:由全自动唤起
         if mode == 0:
-            pass
+            self.system_state.System_busy()
         elif mode == 1:
             x0 = 0
             y0 = 0
@@ -64,6 +64,7 @@ class Functional_Arithmetic:
 
         self.system_state.cruuent_image_edited = True
         color = np.array(self.color_lable.color)
+        color[3] = 255
         tolerance = self.all_bottons.tolerance
         transparent = np.array([0,0,0,0])
 
@@ -89,33 +90,31 @@ class Functional_Arithmetic:
                         self.image_lable.Draw_image_lable()
                     count = 1
                     
-                if  x + 1 < self.image_lable.current_image_image.size[0] and \
-                all(abs(self.image_lable.current_image_array[y,x + 1] - color) <= tolerance) and \
-                self.image_lable.current_image_array[y,x + 1][3] != 0:
+                if  x + 1 < self.image_lable.current_image_image.size[0] \
+                and all(abs(self.image_lable.current_image_array[y,x + 1] - color) <= tolerance) \
+                and self.image_lable.current_image_array[y,x + 1][3] != 0:
                     stack.append((x + 1,y))
                     self.image_lable.current_image_array[y,x + 1] = transparent
-                    count = count + 1 if count < DRAW_INTERAL else 0
                 
-                if x - 1 >= 0 and \
-                all(abs(self.image_lable.current_image_array[y,x - 1] - color) <= tolerance) and \
-                self.image_lable.current_image_array[y,x - 1][3] != 0:
+                if x - 1 >= 0 \
+                and all(abs(self.image_lable.current_image_array[y,x - 1] - color) <= tolerance) \
+                and self.image_lable.current_image_array[y,x - 1][3] != 0:
                     stack.append((x - 1,y))
                     self.image_lable.current_image_array[y,x - 1] = transparent
-                    count = count + 1 if count < DRAW_INTERAL else 0
                 
-                if y + 1 < self.image_lable.current_image_image.size[1] and \
-                all(abs(self.image_lable.current_image_array[y + 1,x] - color) <= tolerance) and \
-                self.image_lable.current_image_array[y + 1,x][3] != 0:
+                if y + 1 < self.image_lable.current_image_image.size[1] \
+                and all(abs(self.image_lable.current_image_array[y + 1,x] - color) <= tolerance) \
+                and self.image_lable.current_image_array[y + 1,x][3] != 0:
                     stack.append((x,y + 1))
                     self.image_lable.current_image_array[y + 1,x] = transparent
-                    count = count + 1 if count < DRAW_INTERAL else 0
 
-                if y - 1 >= 0 and \
-                all(abs(self.image_lable.current_image_array[y - 1,x] - color) <= tolerance) and \
-                self.image_lable.current_image_array[y - 1,x][3] != 0:
+                if y - 1 >= 0 \
+                and all(abs(self.image_lable.current_image_array[y - 1,x] - color) <= tolerance) \
+                and self.image_lable.current_image_array[y - 1,x][3] != 0:
                     stack.append((x,y - 1))
                     self.image_lable.current_image_array[y - 1,x] = transparent
-                    count = count + 1 if count < DRAW_INTERAL else 0
+                
+                count = count + 1 if count < DRAW_INTERAL else 0
 
             self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
             self.image_lable.Draw_image_lable()
@@ -160,18 +159,25 @@ class Functional_Arithmetic:
     def Coloring_image(self,x0,y0):
         self.system_state.cruuent_image_edited = True
 
-        coloring_area = [(i,j) for i in range(x0 - self.all_bottons.brush_size // 2,x0 + self.all_bottons.brush_size // 2 + 1)\
-                               for j in range(y0 - self.all_bottons.brush_size // 2,y0 + self.all_bottons.brush_size // 2 + 1)\
-                               if abs((i - x0)) ** 2 + abs((j - y0)) ** 2 <= (self.all_bottons.brush_size // 2) ** 2 \
-                               and 0 <= x0 and x0 < self.image_lable.current_image_image.size[0] and 0 <= y0 and y0 <= self.image_lable.current_image_image.size[1]]
+        radius = (self.all_bottons.brush_size // 2) ** 2
+
+        coloring_area = [(i,j) for i in range(x0 - self.all_bottons.brush_size // 2, x0 + self.all_bottons.brush_size // 2 + 1)\
+                               for j in range(y0 - self.all_bottons.brush_size // 2, y0 + self.all_bottons.brush_size // 2 + 1)\
+                               if abs((i - x0)) ** 2 + abs((j - y0)) ** 2 <= radius \
+                               and 0 <= i and i < self.image_lable.current_image_image.size[0] \
+                               and 0 <= j and j < self.image_lable.current_image_image.size[1]]
+
+        color = np.array(self.color_lable.color)
 
         for point in coloring_area:
-            self.image_lable.current_image_array[point[1],point[0]] = np.array(self.color_lable.color)
+            self.image_lable.current_image_array[point[1],point[0]] = color
 
         self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
 
     def Filling_image(self,x0,y0):
+        self.system_state.System_busy()
+
         self.system_state.cruuent_image_edited = True
         initial_color = self.image_lable.current_image_array[y0,x0].copy()
         tolerance = self.all_bottons.tolerance
@@ -198,33 +204,31 @@ class Functional_Arithmetic:
                     self.image_lable.Draw_image_lable()
                 count = 1
             
-            if x + 1 < self.image_lable.current_image_image.size[0] and \
-            all(abs(self.image_lable.current_image_array[y,x + 1] - initial_color) <= tolerance) and \
-            any(self.image_lable.current_image_array[y,x + 1] != color):
+            if x + 1 < self.image_lable.current_image_image.size[0] \
+            and all(abs(self.image_lable.current_image_array[y,x + 1] - initial_color) <= tolerance) \
+            and any(self.image_lable.current_image_array[y,x + 1] != color):
                 stack.append((x + 1,y))
                 self.image_lable.current_image_array[y,x + 1] = color
-                count = count + 1 if count < DRAW_INTERAL else 0
                 
-            if x - 1 >= 0 and \
-            all(abs(self.image_lable.current_image_array[y,x - 1] - initial_color) <= tolerance) and \
-            any(self.image_lable.current_image_array[y,x - 1] != color):
+            if x - 1 >= 0 \
+            and all(abs(self.image_lable.current_image_array[y,x - 1] - initial_color) <= tolerance) \
+            and any(self.image_lable.current_image_array[y,x - 1] != color):
                 stack.append((x - 1,y))
                 self.image_lable.current_image_array[y,x - 1] = color
-                count = count + 1 if count < DRAW_INTERAL else 0
                 
-            if  y + 1 < self.image_lable.current_image_image.size[1] and \
-            all(abs(self.image_lable.current_image_array[y + 1,x] - initial_color) <= tolerance) and \
-            any(self.image_lable.current_image_array[y + 1,x] != color):
+            if  y + 1 < self.image_lable.current_image_image.size[1] \
+            and all(abs(self.image_lable.current_image_array[y + 1,x] - initial_color) <= tolerance) \
+            and any(self.image_lable.current_image_array[y + 1,x] != color):
                 stack.append((x,y + 1))
                 self.image_lable.current_image_array[y + 1,x] = color
-                count = count + 1 if count < DRAW_INTERAL else 0
 
-            if y - 1 >= 0 and \
-            all(abs(self.image_lable.current_image_array[y - 1,x] - initial_color) <= tolerance) and \
-            any(self.image_lable.current_image_array[y - 1,x] != color):
+            if y - 1 >= 0 \
+            and all(abs(self.image_lable.current_image_array[y - 1,x] - initial_color) <= tolerance) \
+            and any(self.image_lable.current_image_array[y - 1,x] != color):
                 stack.append((x,y - 1)) 
                 self.image_lable.current_image_array[y - 1,x] = color
-                count = count + 1 if count < DRAW_INTERAL else 0
+
+            count = count + 1 if count < DRAW_INTERAL else 0
  
         self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
@@ -235,11 +239,20 @@ class Functional_Arithmetic:
         #0:由按钮唤起
         #1~4:由半自动唤起
         #5~8:由全自动唤起
-        #9:clean_image唤起
+        #9  :由半自动clean_image唤起
+        #10 :由全自动clean_image唤起
+
+        if mode == 0:
+            self.system_state.System_busy()
+            color = np.array([0,0,0,0])
+        elif mode == 1 or mode == 5:
+            color = np.array(self.color_lable.color)
+        elif mode == 9 or mode == 10:
+            color = np.array([0,0,0,0])
 
         self.system_state.cruuent_image_edited = True
         tolerance = self.all_bottons.tolerance
-        color = np.array(self.color_lable.color)
+
         left,upper,right,lower = 0,0,0,0
 
         flag = 0
@@ -311,12 +324,28 @@ class Functional_Arithmetic:
             t.start()
 
         elif mode == 9:
-            return
+            self.backup_mod.Insert_backup()
+            self.system_state.System_free()
+
+        elif mode == 10:
+            if self.system_state.image_index == len(self.system_state.images) - 1:
+                self.functional_arithmetic.Save_image()
+                self.system_state.System_free()
+            else:
+                self.all_bottons.On_next_button_clicked()
+                t = THREADING_Thread(target=self.functional_arithmetic.Auto_pick_color,args=(5,))
+                t.start()
 
     def Clean_image(self,mode):
         #0:由按钮唤起
         #1~4:由半自动唤起
         #5~8:由全自动唤起
+        if mode == 0:
+            self.system_state.System_busy()
+        elif mode == 4:
+            pass
+        elif mode == 8:
+            pass
 
         self.system_state.cruuent_image_edited = True
         transparent = np.array([0,0,0,0])
@@ -364,26 +393,26 @@ class Functional_Arithmetic:
 
                 x,y = stack.pop()
                     
-                if x + 1 < self.image_lable.current_image_image.size[0] and \
-                pixels_transparency[y,x + 1] != 0:
+                if x + 1 < self.image_lable.current_image_image.size[0] \
+                and pixels_transparency[y,x + 1] != 0:
                     stack.append((x + 1,y))
                     pixels_transparency[y,x + 1] = 0
                     block_list.append((x + 1,y))
                 
-                if x - 1 >= 0 and \
-                pixels_transparency[y,x - 1] != 0:
+                if x - 1 >= 0 \
+                and pixels_transparency[y,x - 1] != 0:
                     stack.append((x - 1,y))
                     pixels_transparency[y,x - 1] = 0
                     block_list.append((x - 1,y))
                     
-                if y + 1 < self.image_lable.current_image_image.size[1] and \
-                pixels_transparency[y + 1,x] != 0:
+                if y + 1 < self.image_lable.current_image_image.size[1] \
+                and pixels_transparency[y + 1,x] != 0:
                     stack.append((x,y + 1))
                     pixels_transparency[y + 1,x] = 0
                     block_list.append((x,y + 1))
                     
-                if y - 1 >= 0 and \
-                pixels_transparency[y - 1,x] != 0:
+                if y - 1 >= 0 \
+                and pixels_transparency[y - 1,x] != 0:
                     stack.append((x,y - 1))
                     pixels_transparency[y - 1,x] = 0
                     block_list.append((x,y - 1))
@@ -391,9 +420,6 @@ class Functional_Arithmetic:
             if len(block_list) <= CLEAN_LIMITE:
                 for x,y in block_list:
                     self.image_lable.current_image_array[y,x] = transparent
-
-            for x,y in block_list:
-                pixels_transparency[y,x] == 0
 
             x,y = current_point_backup
             flag = 0
@@ -428,40 +454,22 @@ class Functional_Arithmetic:
             self.system_state.System_free()
 
         elif mode == 4:          
-            color_backup = self.color_lable.color.copy()
-            self.color_lable.color = transparent
-
-            t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(1,))
+            t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(9,))
             t.start()
-            t.join
-
-            self.color_lable.color = color_backup
-
-            self.backup_mod.Insert_backup()
-            self.system_state.System_free()
 
         elif mode == 8:
-            if self.system_state.image_index == len(self.system_state.images) - 1:
-                self.functional_arithmetic.Save_image()
-                self.system_state.System_free()
-            else:
-                color_backup = self.color_lable.color.copy()
-                self.color_lable.color = transparent
-
-                t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(9,))
-                t.start()
-                t.join
-
-                self.color_lable.color = color_backup
-
-                self.all_bottons.On_next_button_clicked()
-                t = THREADING_Thread(target=self.functional_arithmetic.Auto_pick_color,args=(5,))
-                t.start()
+            t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(10,))
+            t.start()
 
     def Image_binaryzation(self):
+        self.system_state.System_busy()
+
+        balck = np.array([0, 0, 0, 255])
+        white = np.array([255, 255, 255, 255])
+
         for y in range(self.image_lable.current_image_image.size[1]):
             for x in range(self.image_lable.current_image_image.size[0]):
-                self.image_lable.current_image_array[y,x] = np.array([255, 255, 255, 255]) if self.image_lable.current_image_array[y,x][3] == 0 else np.array([0, 0, 0, 255])
+                self.image_lable.current_image_array[y,x] = white if self.image_lable.current_image_array[y,x][3] == 0 else balck
 
         self.image_lable.current_image_image = Image.fromarray(np.array(self.image_lable.current_image_array,dtype = 'uint8'))
         self.image_lable.Draw_image_lable()
@@ -473,6 +481,13 @@ class Functional_Arithmetic:
         #0:由系统唤起
         #1~4:由半自动唤起
         #5~8:由全自动唤起
+        if mode == 0:
+            pass
+        elif mode == 1:
+            self.system_state.System_busy()
+        elif mode == 5:
+            self.system_state.System_busy()
+
         colors = {}
 
         y1 = 0
@@ -482,6 +497,7 @@ class Functional_Arithmetic:
                 colors[tuple(self.image_lable.current_image_array[y1,x])] += 1
             else:
                 colors[tuple(self.image_lable.current_image_array[y1,x])] = 1
+
             if tuple(self.image_lable.current_image_array[y2,x]) in colors:
                 colors[tuple(self.image_lable.current_image_array[y2,x])] += 1
             else:
@@ -494,6 +510,7 @@ class Functional_Arithmetic:
                 colors[tuple(self.image_lable.current_image_array[y,x1])] += 1
             else:
                 colors[tuple(self.image_lable.current_image_array[y,x1])] = 1
+
             if tuple(self.image_lable.current_image_array[y,x2]) in colors:
                 colors[tuple(self.image_lable.current_image_array[y,x2])] += 1
             else:
@@ -511,12 +528,10 @@ class Functional_Arithmetic:
         self.main_window.A_LineEdit.setText(str(color[3]))
 
         if mode == 1:
-            self.system_state.System_busy()
             t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(1,))
             t.start()
 
         elif mode == 5:
-            self.system_state.System_busy()
             t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(5,))
             t.start()
 
@@ -570,6 +585,7 @@ class Functional_Arithmetic:
 
         self.image_lable.Set_image_background()
         self.image_lable.Draw_image_lable()
+        self.system_state.Upadte_image_count()
 
     def Import_image(self,path_list):
         if self.system_state.cruuent_image_edited:
@@ -598,6 +614,7 @@ class Functional_Arithmetic:
 
         self.image_lable.Set_image_background()
         self.image_lable.Draw_image_lable()
+        self.system_state.Upadte_image_count()
 
 
 class Backup_Mod:
@@ -749,6 +766,10 @@ class System_State(QObject):
         self.main_window.Working_Status_Label.setText(self.system_state.working_status_text[self.system_state.working_status_pin])
         self.system_state.working_status_pin = self.system_state.working_status_pin + 1 if self.system_state.working_status_pin < 3 else 0
 
+    def Upadte_image_count(self):
+        self.main_window.Image_Count_Label.setText(str(self.system_state.image_index) + '/' + str(len(self.system_state.images) - 1))
+        pass
+
     def Start_timer(self):
         self.system_state.timer.start(900)
         pass
@@ -874,6 +895,7 @@ class All_Bottons(QMainWindow):
 
             self.image_lable.Set_image_background()
             self.image_lable.Draw_image_lable()
+            self.system_state.Upadte_image_count()
             
         elif self.system_state.image_index == 1:
             self.main_window.Working_Status_Label.setText('这是第一张了')
@@ -898,6 +920,7 @@ class All_Bottons(QMainWindow):
 
             self.image_lable.Set_image_background()
             self.image_lable.Draw_image_lable()
+            self.system_state.Upadte_image_count()
 
         elif self.system_state.image_index == len(self.system_state.images) - 1:
             self.main_window.Working_Status_Label.setText('这是最后一张了')
@@ -916,19 +939,16 @@ class All_Bottons(QMainWindow):
     def On_binarization_button_clicked(self):
         if self.system_state.image_loaded:
             if not self.system_state.system_busy:
-                self.system_state.System_busy()
                 t = THREADING_Thread(target=self.functional_arithmetic.Image_binaryzation,args=())
                 t.start()
 
     def On_crop_button_clicked(self):
         if self.system_state.image_loaded:
-            self.system_state.System_busy()
             t = THREADING_Thread(target=self.functional_arithmetic.Crop_image,args=(0,))
             t.start()
 
     def On_clean_button_clicked(self):
         if self.system_state.image_loaded:
-            self.system_state.System_busy()
             t = THREADING_Thread(target=self.functional_arithmetic.Clean_image,args=(0,))
             t.start()
 
@@ -1252,11 +1272,12 @@ class Mouse_And_Key_Events(QWidget):
         self.draging = False
         self.drag_first_point = QPoint()
         self.drag_second_point = QPoint()
+        self.coloring = False
 
     def mousePressEvent(self,event):
         if self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width()\
-           and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
-           and self.system_state.image_loaded:
+        and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
+        and self.system_state.image_loaded:
             click_point = [0,0]
             click_point[0] = (event.pos().x() - self.main_window.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
                              if self.main_window.Image_H_Scrollbar.isEnabled()\
@@ -1275,32 +1296,41 @@ class Mouse_And_Key_Events(QWidget):
                     self.setCursor(Qt.ClosedHandCursor)
 
                 elif self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.system_state.System_busy()
-                    t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
-                    t.start()
+                    if  0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1] \
+                    and self.image_lable.current_image_array[click_point[1],click_point[0]][3] != 0:
+                        t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
+                        t.start()
 
                 elif self.main_window.PickColor_RadioB.isChecked():
-                    self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
+                    if  0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
                 elif self.main_window.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
+                    if  0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        self.mouse_and_key_events.coloring = True
+                        self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
 
                 elif self.main_window.Filling_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.system_state.System_busy()
-                    t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
-                    t.start()
+                    if  0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
+                        t.start()
 
             elif event.button() == Qt.RightButton and self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
-                self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
-
-                self.system_state.System_busy()
-                t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
-                t.start()
+                if  0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                    self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
+                    if self.image_lable.current_image_array[click_point[1],click_point[0]][3] != 0:
+                        t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
+                        t.start()
 
     def mouseMoveEvent(self,event):
         if self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width()\
-           and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
-           and self.system_state.image_loaded:
+        and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height()\
+        and self.system_state.image_loaded:
             click_point = [0,0]
             click_point[0] = (event.pos().x() - self.main_window.Image_Lable.geometry().x() + self.image_lable.scrollbar_offset[0]) // self.image_lable.zoom\
                              if self.main_window.Image_H_Scrollbar.isEnabled()\
@@ -1314,65 +1344,61 @@ class Mouse_And_Key_Events(QWidget):
                                   // self.image_lable.zoom
             
             if event.buttons() == Qt.LeftButton:
-                if self.mouse_and_key_events.draging:
+                if self.mouse_and_key_events.draging \
+                and (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                 or self.mouse_and_key_events.drag_first_point.y() != click_point[1]):
                     self.mouse_and_key_events.drag_second_point = event.pos()
-
-                    if self.main_window.Image_H_Scrollbar.isEnabled():
-                        self.image_lable.scrollbar_offset[0] += self.mouse_and_key_events.drag_first_point.x() - self.mouse_and_key_events.drag_second_point.x()
-                        if self.image_lable.scrollbar_offset[0] < 0:
-                            self.image_lable.scrollbar_offset[0] = 0
-                        if self.image_lable.scrollbar_offset[0] > self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width():
-                            self.image_lable.scrollbar_offset[0] = self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width()
-
-                        self.main_window.Image_H_Scrollbar.blockSignals(True)
-                        self.main_window.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0])
-                        self.main_window.Image_H_Scrollbar.blockSignals(False)
-
-                    if self.main_window.Image_V_Scrollbar.isEnabled():       
-                        self.image_lable.scrollbar_offset[1] += self.mouse_and_key_events.drag_first_point.y() - self.mouse_and_key_events.drag_second_point.y()
-                        if self.image_lable.scrollbar_offset[1] < 0:
-                            self.image_lable.scrollbar_offset[1] = 0
-                        if self.image_lable.scrollbar_offset[1] > self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height():
-                            self.image_lable.scrollbar_offset[1] = self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height()
-
-                        self.main_window.Image_V_Scrollbar.blockSignals(True)
-                        self.main_window.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1])
-                        self.main_window.Image_V_Scrollbar.blockSignals(False)
-                                            
-                    self.image_lable.Draw_image_lable()
-
+                    self.Drag_image()
                     self.mouse_and_key_events.drag_first_point = self.mouse_and_key_events.drag_second_point
 
                 elif self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.system_state.System_busy()
-                    t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
-                    t.start()
+                    if (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                     or self.mouse_and_key_events.drag_first_point.y() != click_point[1]) \
+                    and 0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1] \
+                    and self.image_lable.current_image_array[click_point[1],click_point[0]][3] != 0:
+
+                        t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
+                        t.start()
 
                 elif self.main_window.PickColor_RadioB.isChecked():
-                    self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
+                    if (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                     or self.mouse_and_key_events.drag_first_point.y() != click_point[1]) \
+                    and 0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
 
                 elif self.main_window.Coloring_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
+                    if (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                     or self.mouse_and_key_events.drag_first_point.y() != click_point[1]) \
+                    and 0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        self.functional_arithmetic.Coloring_image(click_point[0],click_point[1])
 
                 elif self.main_window.Filling_RadioB.isChecked() and not self.system_state.system_busy:
-                    self.system_state.System_busy()
-                    t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
-                    t.start()
+                    if (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                     or self.mouse_and_key_events.drag_first_point.y() != click_point[1]) \
+                    and 0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                    and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                        t = THREADING_Thread(target=self.functional_arithmetic.Filling_image,args=(click_point[0],click_point[1],))
+                        t.start()
 
             elif event.buttons() == Qt.RightButton and self.main_window.Cutout_RadioB.isChecked() and not self.system_state.system_busy:
-                self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
-
-                self.system_state.System_busy()
-                t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
-                t.start()
+                if (self.mouse_and_key_events.drag_first_point.x() != click_point[0] \
+                 or self.mouse_and_key_events.drag_first_point.y() != click_point[1]) \
+                and 0 <= click_point[0] and click_point[0] < self.image_lable.current_image_image.size[0] \
+                and 0 <= click_point[1] and click_point[1] < self.image_lable.current_image_image.size[1]:
+                    self.functional_arithmetic.Pick_color(click_point[0],click_point[1])
+                    if self.image_lable.current_image_array[click_point[1],click_point[0]][3] != 0:
+                        t = THREADING_Thread(target=self.functional_arithmetic.Cutout_image,args=(click_point[0],click_point[1],0,))
+                        t.start()
 
     def mouseReleaseEvent(self,event):
         self.setCursor(Qt.ArrowCursor)
 
-        if self.main_window.Coloring_RadioB.isChecked() and self.system_state.image_loaded and not self.system_state.system_busy \
-        and self.main_window.Image_Lable.geometry().x() <= event.pos().x() and event.pos().x() <= self.main_window.Image_Lable.geometry().x() + self.main_window.Image_Lable.geometry().width() \
-        and self.main_window.Image_Lable.geometry().y() <= event.pos().y() and event.pos().y() <= self.main_window.Image_Lable.geometry().y() + self.main_window.Image_Lable.geometry().height():
+        if self.coloring:
             self.backup_mod.Insert_backup()
+            self.mouse_and_key_events.coloring = False
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Space:
@@ -1381,6 +1407,31 @@ class Mouse_And_Key_Events(QWidget):
     def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_Space:
             self.mouse_and_key_events.draging = False
+
+    def Drag_image(self):
+        if self.main_window.Image_H_Scrollbar.isEnabled():
+            self.image_lable.scrollbar_offset[0] += self.mouse_and_key_events.drag_first_point.x() - self.mouse_and_key_events.drag_second_point.x()
+            if self.image_lable.scrollbar_offset[0] < 0:
+                self.image_lable.scrollbar_offset[0] = 0
+            if self.image_lable.scrollbar_offset[0] > self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width():
+                self.image_lable.scrollbar_offset[0] = self.image_lable.current_image_image.size[0] * self.image_lable.zoom - self.main_window.Image_Lable.width()
+
+            self.main_window.Image_H_Scrollbar.blockSignals(True)
+            self.main_window.Image_H_Scrollbar.setValue(self.image_lable.scrollbar_offset[0])
+            self.main_window.Image_H_Scrollbar.blockSignals(False)
+
+        if self.main_window.Image_V_Scrollbar.isEnabled():       
+            self.image_lable.scrollbar_offset[1] += self.mouse_and_key_events.drag_first_point.y() - self.mouse_and_key_events.drag_second_point.y()
+            if self.image_lable.scrollbar_offset[1] < 0:
+                self.image_lable.scrollbar_offset[1] = 0
+            if self.image_lable.scrollbar_offset[1] > self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height():
+                self.image_lable.scrollbar_offset[1] = self.image_lable.current_image_image.size[1] * self.image_lable.zoom - self.main_window.Image_Lable.height()
+
+            self.main_window.Image_V_Scrollbar.blockSignals(True)
+            self.main_window.Image_V_Scrollbar.setValue(self.image_lable.scrollbar_offset[1])
+            self.main_window.Image_V_Scrollbar.blockSignals(False)
+                                            
+        self.image_lable.Draw_image_lable()
 
 
 class MainW_indow(QMainWindow,Ui_Main_Window_UI):

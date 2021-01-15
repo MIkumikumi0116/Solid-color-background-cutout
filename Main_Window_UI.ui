@@ -532,6 +532,29 @@ border: 1px solid rgb(28 , 28 , 28);</string>
        </widget>
       </item>
       <item>
+       <spacer name="verticalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="Image_Count_Label">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -635,6 +658,9 @@ border: 1px solid rgb(28 , 28 , 28);</string>
       </item>
       <item>
        <layout class="QHBoxLayout" name="T_Layout" stretch="2,0,0,0,2">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer_8">
           <property name="orientation">
@@ -725,6 +751,9 @@ border: 1px solid rgb(28 , 28 , 28);</string>
       </item>
       <item>
        <layout class="QHBoxLayout" name="S_Layout" stretch="2,0,0,0,2">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer_9">
           <property name="orientation">
@@ -1223,6 +1252,9 @@ border: 1px solid rgb(28 , 28 , 28);
             <property name="text">
              <string>上一张</string>
             </property>
+            <property name="shortcut">
+             <string>Up</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -1260,6 +1292,9 @@ border: 1px solid rgb(28 , 28 , 28);
             </property>
             <property name="text">
              <string>下一张</string>
+            </property>
+            <property name="shortcut">
+             <string>Down</string>
             </property>
            </widget>
           </item>
